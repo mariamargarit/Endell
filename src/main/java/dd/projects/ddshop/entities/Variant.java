@@ -16,7 +16,7 @@ public class Variant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private int price;
+    private float price;
 
     private int availableQuantity;
 

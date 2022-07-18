@@ -19,7 +19,7 @@ public class UserOrderController {
     }
 
     @PostMapping("/createOrder")
-    ResponseEntity<Object> create(UserOrder order) {
+    ResponseEntity<Object> create(@RequestBody UserOrder order) {
         userOrderService.createOrder(order);
         return new ResponseEntity<>("", HttpStatus.CREATED);
     }
@@ -29,7 +29,7 @@ public class UserOrderController {
         return new ResponseEntity<>(userOrderService.getOrders(), HttpStatus.ACCEPTED);
     }
 
-    @PutMapping("/updateProduct/{id}")
+    @PutMapping("/updateOrder/{id}")
     ResponseEntity<Object> update(@PathVariable Integer id, @RequestBody UserOrder order) {
         userOrderService.updateOrder(id, order);
         return new ResponseEntity<>("", HttpStatus.ACCEPTED);

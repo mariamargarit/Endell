@@ -23,7 +23,7 @@ public class Product {
 
     @OneToOne
     @JoinColumn(name = "subcategory_id")
-    private Subcategory subcategory;
+    private Subcategory subcategoryId;
 
     @OneToMany(mappedBy = "productId")
     private List<Variant> variants;

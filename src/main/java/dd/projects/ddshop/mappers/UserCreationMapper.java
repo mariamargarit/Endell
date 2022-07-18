@@ -7,8 +7,6 @@ import org.mapstruct.Mapper;
 
 @Mapper
 public class UserCreationMapper {
-    public UserCreationMapper() {
-    }
 
     public User sourceToDestination(UserCreationDTO userCreationDTO) {
         if(userCreationDTO == null){

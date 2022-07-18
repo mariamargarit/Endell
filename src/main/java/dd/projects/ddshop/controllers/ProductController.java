@@ -1,10 +1,8 @@
 package dd.projects.ddshop.controllers;
 
 import dd.projects.ddshop.dto.ProductDTO;
-import dd.projects.ddshop.entities.Category;
 import dd.projects.ddshop.entities.Product;
 import dd.projects.ddshop.entities.Subcategory;
-import dd.projects.ddshop.services.CategoryService;
 import dd.projects.ddshop.services.ProductService;
 import dd.projects.ddshop.services.SubcategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,20 +26,21 @@ public class ProductController {
 
     @PostMapping("/createProduct")
     ResponseEntity<Object> create(@RequestBody ProductDTO productDTO) {
-        Optional<Subcategory> optionalSubcategory = subcategoryService.readSubcategory(productDTO.getSubcategoryId());
+        Optional<Subcategory> optionalSubcategory = subcategoryService.readSubcategory(productDTO.getSubcategoryId().getId());
         Subcategory subcategory = optionalSubcategory.get();
         productService.createProduct(productDTO, subcategory);
         return new ResponseEntity<>("", HttpStatus.CREATED);
     }
 
     @GetMapping("/getAllProducts")
-    ResponseEntity<List<Product>> read() {
+    ResponseEntity<List<ProductDTO>> read() {
         return new ResponseEntity<>(productService.getProducts(), HttpStatus.ACCEPTED);
     }
 
-    @PutMapping("/updateProduct")
-    Product update(Product product) {
-        return productService.updateProduct(product);
+    @PutMapping("/updateProduct/{id}")
+    public ResponseEntity<Object> updateProduct (@PathVariable Integer id, @RequestBody Product newProduct) {
+        productService.updateProduct(id,newProduct);
+        return new ResponseEntity<>("",HttpStatus.OK);
     }
 
     @DeleteMapping("/deleteProduct/{id}")
