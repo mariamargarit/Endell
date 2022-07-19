@@ -1,6 +1,6 @@
 package dd.projects.ddshop.services;
 
-import dd.projects.ddshop.dto.UserDTO;
+import dd.projects.ddshop.dtos.UserDTO;
 import dd.projects.ddshop.entities.User;
 import dd.projects.ddshop.repos.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

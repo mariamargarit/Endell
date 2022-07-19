@@ -25,5 +25,8 @@ public class Subcategory {
                   referencedColumnName = "id"))
   private List<ProductAttribute> productAttributes;
 
+  @OneToMany(mappedBy = "subcategoryId")
+  private List<Product> products;
+
 
 }

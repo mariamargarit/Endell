@@ -21,7 +21,7 @@ public class Product {
 
     private String description;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "subcategory_id")
     private Subcategory subcategoryId;
 

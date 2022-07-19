@@ -1,4 +1,4 @@
-package dd.projects.ddshop.dto;
+package dd.projects.ddshop.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
