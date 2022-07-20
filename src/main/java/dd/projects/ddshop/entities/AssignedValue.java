@@ -1,14 +1,17 @@
 package dd.projects.ddshop.entities;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class AssignedValue {
 
     @Id
@@ -23,7 +26,13 @@ public class AssignedValue {
     @JoinColumn(name = "product_attribute_id")
     private ProductAttribute productAttributeId;
 
-    @OneToMany(mappedBy = "assignedValueId")
-    private List<VariantCombination> variantCombinations;
+    @ManyToMany(mappedBy = "variantCombinations")
+    private List<Variant> variantCombinations;
+
+    public AssignedValue(AttributeValue value, ProductAttribute productAttribute) {
+        this.attributeValueId = value;
+        this.productAttributeId = productAttribute;
+        this.variantCombinations = new ArrayList<>();
+    }
 
 }

@@ -1,8 +1,10 @@
 package dd.projects.ddshop.controllers;
 
-import dd.projects.ddshop.dto.ProductDTO;
+import dd.projects.ddshop.dtos.ProductDTO;
 import dd.projects.ddshop.entities.Product;
 import dd.projects.ddshop.entities.Subcategory;
+import dd.projects.ddshop.mappers.SubcategoryDTOMapper;
+import dd.projects.ddshop.mappers.SubcategoryMapper;
 import dd.projects.ddshop.services.ProductService;
 import dd.projects.ddshop.services.SubcategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,36 +17,37 @@ import java.util.Optional;
 
 @RestController
 public class ProductController {
+
     private final ProductService productService;
-    private final SubcategoryService subcategoryService;
 
     @Autowired
-    ProductController(ProductService productService, SubcategoryService subcategoryService) {
+    SubcategoryService subcategoryService;
+
+    @Autowired
+    public ProductController(ProductService productService) {
         this.productService = productService;
-        this.subcategoryService = subcategoryService;
     }
 
     @PostMapping("/createProduct")
-    ResponseEntity<Object> create(@RequestBody ProductDTO productDTO) {
-        Optional<Subcategory> optionalSubcategory = subcategoryService.readSubcategory(productDTO.getSubcategoryId().getId());
-        Subcategory subcategory = optionalSubcategory.get();
-        productService.createProduct(productDTO, subcategory);
+    public ResponseEntity<Object> create(@RequestBody ProductDTO productDto) {
+        Subcategory subcategory = subcategoryService.readSubcategory(productDto.getSubcategoryId().getCategoryId());
+        productService.createProduct(productDto, subcategory);
         return new ResponseEntity<>("", HttpStatus.CREATED);
     }
 
     @GetMapping("/getAllProducts")
-    ResponseEntity<List<ProductDTO>> read() {
-        return new ResponseEntity<>(productService.getProducts(), HttpStatus.ACCEPTED);
+    public ResponseEntity<List<ProductDTO>> read() {
+        return new ResponseEntity<>(productService.getProduct(), HttpStatus.OK);
     }
 
     @PutMapping("/updateProduct/{id}")
-    public ResponseEntity<Object> updateProduct (@PathVariable Integer id, @RequestBody Product newProduct) {
+    public ResponseEntity<Object> update (@PathVariable Integer id, @RequestBody Product newProduct) {
         productService.updateProduct(id,newProduct);
         return new ResponseEntity<>("",HttpStatus.OK);
     }
 
     @DeleteMapping("/deleteProduct/{id}")
-    void delete(@PathVariable Integer id) {
+    void delete (@PathVariable Integer id) {
         productService.deleteProductById(id);
     }
 }

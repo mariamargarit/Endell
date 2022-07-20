@@ -1,7 +1,7 @@
 package dd.projects.ddshop.controllers;
 
-import dd.projects.ddshop.dto.UserCreationDTO;
-import dd.projects.ddshop.dto.UserDTO;
+import dd.projects.ddshop.dtos.UserCreationDTO;
+import dd.projects.ddshop.dtos.UserDTO;
 import dd.projects.ddshop.entities.User;
 import dd.projects.ddshop.mappers.UserCreationMapper;
 import dd.projects.ddshop.services.UserService;

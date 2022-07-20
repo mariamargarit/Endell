@@ -1,6 +1,6 @@
 package dd.projects.ddshop.mappers;
 
-import dd.projects.ddshop.dto.UserDTO;
+import dd.projects.ddshop.dtos.UserDTO;
 import dd.projects.ddshop.entities.User;
 import org.mapstruct.Mapper;
 

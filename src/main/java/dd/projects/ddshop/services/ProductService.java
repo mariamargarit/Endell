@@ -1,7 +1,6 @@
 package dd.projects.ddshop.services;
 
-import dd.projects.ddshop.dto.ProductDTO;
-import dd.projects.ddshop.entities.Category;
+import dd.projects.ddshop.dtos.ProductDTO;
 import dd.projects.ddshop.entities.Product;
 import dd.projects.ddshop.entities.Subcategory;
 import dd.projects.ddshop.mappers.ProductMapper;
@@ -17,37 +16,45 @@ import static java.util.stream.Collectors.toList;
 @Service
 public class ProductService {
     private final ProductRepository productRepository;
+
     ProductMapper productMapper = new ProductMapper();
 
     @Autowired
-    public ProductService(ProductRepository productRepository) {
+    public ProductService (ProductRepository productRepository){
         this.productRepository = productRepository;
     }
-    public static Product getProductFromDto(ProductDTO productDto, Subcategory subcategory) {
+
+    public static Product getProductFromDTO(ProductDTO productDto, Subcategory subcategory) {
         Product product = new Product();
-        product.setSubcategoryId(subcategory);
-        product.setDescription(productDto.getDescription());
         product.setName(productDto.getName());
+        product.setDescription(productDto.getDescription());
+        product.setSubcategoryId(subcategory);
         return product;
-    }
-    public void createProduct(ProductDTO productDTO, Subcategory subcategory) {
-        Product product = getProductFromDto(productDTO, subcategory);
-        productRepository.save(product);
     }
     public Optional<Product> readProduct(Integer productId) {
         return productRepository.findById(productId);
     }
-    public List<ProductDTO> getProducts() {
+
+    public void createProduct (ProductDTO productDto, Subcategory subcategory) {
+        Product product = getProductFromDTO(productDto, subcategory);
+        productRepository.save(product);
+    }
+
+    public List<ProductDTO> getProduct() {
         return productRepository.findAll()
                 .stream()
                 .map(productMapper::trans)
                 .collect(toList());
     }
+
     public void updateProduct (int productId, Product newProduct) {
         Product product = productRepository.findById(productId).get();
         product.setName(newProduct.getName());
         product.setDescription(newProduct.getDescription());
         productRepository.save(product);
     }
-    public void deleteProductById(int id){ productRepository.deleteById(id);}
+
+    public void deleteProductById (int id) {
+        productRepository.deleteById(id);
+    }
 }

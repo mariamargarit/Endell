@@ -1,12 +1,18 @@
 package dd.projects.ddshop.controllers;
 
+import dd.projects.ddshop.dtos.CategoryDTO;
+import dd.projects.ddshop.entities.Address;
 import dd.projects.ddshop.entities.Category;
+import dd.projects.ddshop.entities.Product;
 import dd.projects.ddshop.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RestController
 public class CategoryController {
     private final CategoryService categoryService;
 
@@ -15,24 +21,24 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
-    @PostMapping
-    void create(Category category) {
+    @PostMapping("/createCategory")
+    ResponseEntity<Object> create(@RequestBody Category category) {
         categoryService.createCategory(category);
+        return new ResponseEntity<>("", HttpStatus.CREATED);
     }
 
-    @GetMapping
-    @ResponseBody
-    List<Category> read() {
-        return categoryService.getCategories();
+    @GetMapping("/getAllCategories")
+    ResponseEntity<List<CategoryDTO>> read() {
+        return new ResponseEntity<>(categoryService.getCategory(), HttpStatus.ACCEPTED);
     }
 
-    @PutMapping
-    @ResponseBody
-    Category update(Category category) {
-        return categoryService.updateCategory(category);
+    @PutMapping("/updateCategory/{id}")
+    public ResponseEntity<Object> update (@PathVariable Integer id, @RequestBody Category newCategory) {
+        categoryService.updateCategory(id,newCategory);
+        return new ResponseEntity<>("", HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/deleteCategory/{id}")
     void delete(@PathVariable Integer id) {
         categoryService.deleteCategoryById(id);
     }

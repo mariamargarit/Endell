@@ -1,4 +1,4 @@
-package dd.projects.ddshop.dto;
+package dd.projects.ddshop.dtos;
 
 import dd.projects.ddshop.entities.User;
 import lombok.AllArgsConstructor;
