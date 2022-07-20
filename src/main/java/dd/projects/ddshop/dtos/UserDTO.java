@@ -1,18 +1,13 @@
 package dd.projects.ddshop.dtos;
 
 import dd.projects.ddshop.entities.User;
+import dd.projects.ddshop.mappers.AddressMapperImpl;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @AllArgsConstructor
 @Data
 public class UserDTO {
-    public UserDTO(User user) {
-        this.setEmail(user.getEmail());
-        this.setFirstName(user.getFirstName());
-        this.setLastName(user.getLastName());
-        this.setPhoneNumber(user.getPhoneNumber());
-    }
 
     private String firstName;
 
@@ -21,5 +16,9 @@ public class UserDTO {
     private String email;
 
     private String phoneNumber;
+
+    private AddressDTO defaultDeliveryAddress;
+
+    private AddressDTO defaultBillingAddress;
 
 }

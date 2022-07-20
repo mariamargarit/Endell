@@ -3,19 +3,10 @@ package dd.projects.ddshop.mappers;
 import dd.projects.ddshop.dtos.UserCreationDTO;
 import dd.projects.ddshop.entities.User;
 import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
 
-@Mapper
-public class UserCreationMapper {
-
-    public User sourceToDestination(UserCreationDTO userCreationDTO) {
-        if(userCreationDTO == null){
-            return null;
-        }
-        User user = new User();
-        user.setFirstName(userCreationDTO.getFirstName());
-        user.setLastName(userCreationDTO.getLastName());
-        user.setEmail(userCreationDTO.getEmail());
-        user.setPhoneNumber(userCreationDTO.getPhoneNumber());
-        return user;
-    }
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring")
+public interface UserCreationMapper {
+    UserCreationDTO toUserCreationDTO(User user);
+    User toUser(UserCreationDTO userCreationDTO);
 }

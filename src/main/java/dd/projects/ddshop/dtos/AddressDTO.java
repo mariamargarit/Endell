@@ -7,9 +7,9 @@ import lombok.Data;
 @Data
 public class AddressDTO {
 
-    private String street_line;
+    private String streetLine;
 
-    private int postal_code;
+    private int postalCode;
 
     private String city;
 

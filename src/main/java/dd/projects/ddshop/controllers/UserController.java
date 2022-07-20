@@ -4,6 +4,7 @@ import dd.projects.ddshop.dtos.UserCreationDTO;
 import dd.projects.ddshop.dtos.UserDTO;
 import dd.projects.ddshop.entities.User;
 import dd.projects.ddshop.mappers.UserCreationMapper;
+import dd.projects.ddshop.mappers.UserCreationMapperImpl;
 import dd.projects.ddshop.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,16 +16,17 @@ import java.util.List;
 @RestController
 public class UserController {
     private final UserService userService;
-    UserCreationMapper userCreationMapper = new UserCreationMapper();
+    private final UserCreationMapperImpl userCreationMapper;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, UserCreationMapperImpl userCreationMapper) {
         this.userService = userService;
+        this.userCreationMapper = userCreationMapper;
     }
 
     @PostMapping("/createUser")
     ResponseEntity<Object> create(@RequestBody UserCreationDTO userCreationDTO) {
-        userService.createUser(userCreationMapper.sourceToDestination(userCreationDTO));
+        userService.createUser(userCreationDTO);
         return new ResponseEntity<>("", HttpStatus.CREATED);
     }
 
@@ -35,8 +37,8 @@ public class UserController {
     }
 
     @PutMapping("/updateUser/{id}")
-    ResponseEntity<Object> update(@PathVariable Integer id, @RequestBody User user) {
-        userService.updateUser(id, user);
+    ResponseEntity<Object> update(@PathVariable Integer id, @RequestBody UserDTO userDTO) {
+        userService.updateUser(id, userDTO);
         return new ResponseEntity<>("", HttpStatus.ACCEPTED);
     }
 

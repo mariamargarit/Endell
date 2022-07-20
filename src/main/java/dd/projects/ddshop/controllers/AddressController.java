@@ -1,5 +1,6 @@
 package dd.projects.ddshop.controllers;
 
+import dd.projects.ddshop.dtos.AddressDTO;
 import dd.projects.ddshop.entities.Address;
 import dd.projects.ddshop.services.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,19 +20,19 @@ public class AddressController {
     }
 
     @PostMapping("/createAddress")
-    ResponseEntity<Object> create(@RequestBody Address address) {
-        addressService.createAddress(address);
+    ResponseEntity<Object> create(@RequestBody AddressDTO addressDTO) {
+        addressService.createAddress(addressDTO);
         return new ResponseEntity<>("", HttpStatus.CREATED);
     }
 
     @GetMapping("/getAllAddresses")
-    ResponseEntity<List<Address>> read() {
+    ResponseEntity<List<AddressDTO>> read() {
         return new ResponseEntity<>(addressService.getAddresses(), HttpStatus.ACCEPTED);
     }
 
     @PutMapping("/updateAddress/{id}")
-    ResponseEntity<Object> update(@PathVariable Integer id, @RequestBody Address address) {
-        addressService.updateAddress(id, address);
+    ResponseEntity<Object> update(@PathVariable Integer id, @RequestBody AddressDTO addressDTO) {
+        addressService.updateAddress(id, addressDTO);
         return new ResponseEntity<>("", HttpStatus.ACCEPTED);
     }
 

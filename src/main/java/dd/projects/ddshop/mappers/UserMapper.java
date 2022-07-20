@@ -3,19 +3,12 @@ package dd.projects.ddshop.mappers;
 import dd.projects.ddshop.dtos.UserDTO;
 import dd.projects.ddshop.entities.User;
 import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
 
-@Mapper
-public class UserMapper {
-    public User sourceToDestination(UserDTO userDTO) {
-        if(userDTO == null){
-            return null;
-        }
-        User user = new User();
-        user.setFirstName(userDTO.getFirstName());
-        user.setLastName(userDTO.getLastName());
-        user.setEmail(userDTO.getEmail());
-        user.setPhoneNumber(userDTO.getPhoneNumber());
-        return user;
-    }
+import java.nio.file.attribute.UserDefinedFileAttributeView;
 
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring")
+public interface UserMapper {
+    UserDTO toUserDTO(User user);
+    User toUser(UserDTO userDTO);
 }

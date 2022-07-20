@@ -17,12 +17,12 @@ import java.util.Optional;
 public class AttributeValueController {
     private final AttributeValueService attributeValueService;
 
-    @Autowired
-    ProductAttributeService productAttributeService;
+    private final ProductAttributeService productAttributeService;
 
     @Autowired
-    public AttributeValueController (AttributeValueService attributeValueService) {
+    public AttributeValueController (AttributeValueService attributeValueService, ProductAttributeService productAttributeService) {
         this.attributeValueService = attributeValueService;
+        this.productAttributeService = productAttributeService;
     }
 
     @GetMapping("/getAttributeValue")
@@ -32,14 +32,13 @@ public class AttributeValueController {
 
     @PostMapping("/createAttributeValue")
     public ResponseEntity <Object> createAttributeValue (@RequestBody AttributeValueDTO attributeValueDTO){
-        ProductAttribute productAttribute = productAttributeService.readProductAttribute(attributeValueDTO.getProductAttributeId());
-        attributeValueService.createAttributeValue(attributeValueDTO,productAttribute);
+        attributeValueService.createAttributeValue(attributeValueDTO);
         return new ResponseEntity<>("", HttpStatus.CREATED);
     }
 
     @PutMapping("/updateAttributeValue/{id}")
-    public ResponseEntity<Object> updateAttributeValue (@PathVariable Integer id, @RequestBody AttributeValue newAttributeValue) {
-        attributeValueService.updateAttributeValue(id,newAttributeValue);
+    public ResponseEntity<Object> updateAttributeValue (@PathVariable Integer id, @RequestBody AttributeValueDTO newAttributeValueDTO) {
+        attributeValueService.updateAttributeValue(id,newAttributeValueDTO);
         return new ResponseEntity<>("",HttpStatus.OK);
     }
 
