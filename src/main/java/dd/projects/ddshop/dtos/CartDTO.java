@@ -8,10 +8,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class CartDTO {
-    public CartDTO(Cart cart) {
-        this.setTotalPrice(cart.getTotalPrice());
-        this.setUserId(cart.getUserId().getId());
-    }
+
     private float totalPrice;
-    private int userId;
+    private UserDTO userId;
 }

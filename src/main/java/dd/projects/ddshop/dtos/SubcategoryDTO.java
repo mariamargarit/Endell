@@ -4,9 +4,13 @@ import dd.projects.ddshop.entities.Category;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 public class SubcategoryDTO {
+    private int subcategoryId;
     private String name;
-    private int categoryId;
+    private CategoryDTO categoryId;
+    private List<ProductDTO> productDTOList;
 }

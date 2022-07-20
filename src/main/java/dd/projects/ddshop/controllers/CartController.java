@@ -27,8 +27,7 @@ public class CartController {
 
     @PostMapping("/createCart")
     public ResponseEntity<Object> create(@RequestBody CartDTO cartDTO) {
-        User user = userService.readUser(cartDTO.getUserId());
-        cartService.createCart(cartDTO, user);
+        cartService.createCart(cartDTO);
         return new ResponseEntity<>("", HttpStatus.CREATED);
     }
 
@@ -38,8 +37,8 @@ public class CartController {
     }
 
     @PutMapping("/updateCart/{id}")
-    public ResponseEntity<Object> update (@PathVariable Integer id, @RequestBody Cart newCart) {
-        cartService.updateCart(id,newCart);
+    public ResponseEntity<Object> update (@PathVariable Integer id, @RequestBody CartDTO newCartDTO) {
+        cartService.updateCart(id,newCartDTO);
         return new ResponseEntity<>("",HttpStatus.OK);
     }
 

@@ -5,7 +5,9 @@ import dd.projects.ddshop.dtos.SubcategoryDTO;
 import dd.projects.ddshop.entities.Category;
 import dd.projects.ddshop.entities.Product;
 import dd.projects.ddshop.entities.Subcategory;
+import dd.projects.ddshop.mappers.CategoryMapperImpl;
 import dd.projects.ddshop.mappers.SubcategoryMapper;
+import dd.projects.ddshop.mappers.SubcategoryMapperImpl;
 import dd.projects.ddshop.repos.SubcategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,11 +20,14 @@ import static java.util.stream.Collectors.toList;
 @Service
 public class SubcategoryService {
     private final SubcategoryRepository subcategoryRepository;
-    SubcategoryMapper subcategoryMapper = new SubcategoryMapper();
+    private final SubcategoryMapperImpl subcategoryMapper;
+    private final CategoryMapperImpl categoryMapper;
 
     @Autowired
-    public SubcategoryService(SubcategoryRepository subcategoryRepository) {
+    public SubcategoryService(SubcategoryRepository subcategoryRepository, SubcategoryMapperImpl subcategoryMapper, CategoryMapperImpl categoryMapper) {
         this.subcategoryRepository = subcategoryRepository;
+        this.subcategoryMapper = subcategoryMapper;
+        this.categoryMapper = categoryMapper;
     }
 
     public static Subcategory getSubcategoryFromDTO(SubcategoryDTO subcategoryDTO, Category category) {
@@ -32,26 +37,27 @@ public class SubcategoryService {
         return subcategory;
     }
 
-    public void createSubcategory (SubcategoryDTO subcategoryDTO, Category category) {
-        Subcategory subcategory = getSubcategoryFromDTO(subcategoryDTO, category);
-        subcategoryRepository.save(subcategory);
+    public void createSubcategory (SubcategoryDTO subcategoryDTO) {
+//        Subcategory subcategory = getSubcategoryFromDTO(subcategoryDTO, category);
+//        subcategoryRepository.save(subcategory);
+        subcategoryRepository.save(subcategoryMapper.toSubcategory(subcategoryDTO));
     }
 
     public List<Subcategory> getSubcategories() { return subcategoryRepository.findAll(); }
     public List<SubcategoryDTO> getSubcategory() {
         return subcategoryRepository.findAll()
                 .stream()
-                .map(subcategoryMapper::trans)
+                .map(subcategoryMapper::toSubcategoryDTO)
                 .collect(toList());
     }
 
     public Subcategory readSubcategory(Integer id) {
         return subcategoryRepository.getReferenceById(id);
     }
-    public void updateSubcategory(int subcategoryId, Subcategory newSubcategory) {
+    public void updateSubcategory(int subcategoryId, SubcategoryDTO newSubcategory) {
         Subcategory subcategory = subcategoryRepository.findById(subcategoryId).get();
         subcategory.setName(newSubcategory.getName());
-        subcategory.setCategoryId(newSubcategory.getCategoryId());
+        subcategory.setCategoryId(categoryMapper.toCategory(newSubcategory.getCategoryId()));
         subcategoryRepository.save(subcategory);
     }
     public void deleteSubcategoryById(int id) { subcategoryRepository.deleteById(id); }

@@ -5,9 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class AttributeValueDTO {
-
-    private String val;
-
+public class AssignedValueDTO {
+    private AttributeValueDTO attributeValueId;
     private ProductAttributeDTO productAttributeId;
 }

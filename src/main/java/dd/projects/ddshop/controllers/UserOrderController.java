@@ -1,5 +1,6 @@
 package dd.projects.ddshop.controllers;
 
+import dd.projects.ddshop.dtos.UserOrderDTO;
 import dd.projects.ddshop.entities.Address;
 import dd.projects.ddshop.entities.UserOrder;
 import dd.projects.ddshop.services.UserOrderService;
@@ -19,7 +20,7 @@ public class UserOrderController {
     }
 
     @PostMapping("/createOrder")
-    ResponseEntity<Object> create(@RequestBody UserOrder order) {
+    ResponseEntity<Object> create(@RequestBody UserOrderDTO order) {
         userOrderService.createOrder(order);
         return new ResponseEntity<>("", HttpStatus.CREATED);
     }

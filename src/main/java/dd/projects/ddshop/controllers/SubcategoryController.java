@@ -1,10 +1,8 @@
 package dd.projects.ddshop.controllers;
 
 import dd.projects.ddshop.dtos.SubcategoryDTO;
-import dd.projects.ddshop.entities.Address;
 import dd.projects.ddshop.entities.Category;
 import dd.projects.ddshop.entities.Subcategory;
-import dd.projects.ddshop.mappers.CategoryDTOMapper;
 import dd.projects.ddshop.services.CategoryService;
 import dd.projects.ddshop.services.SubcategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class SubcategoryController {
@@ -29,8 +26,9 @@ public class SubcategoryController {
 
     @PostMapping("/createSubcategory")
     ResponseEntity<Object> create(@RequestBody SubcategoryDTO subcategoryDTO) {
-        Category category = categoryService.readCategory(subcategoryDTO.getCategoryId());
-        subcategoryService.createSubcategory(subcategoryDTO, category);
+//        Category category = categoryService.readCategory(subcategoryDTO.getCategoryId());
+//        subcategoryService.createSubcategory(subcategoryDTO, category);
+        subcategoryService.createSubcategory(subcategoryDTO);
         return new ResponseEntity<>("", HttpStatus.CREATED);
     }
 
@@ -40,8 +38,8 @@ public class SubcategoryController {
     }
 
     @PutMapping("/updateSubcategory/{id}")
-    ResponseEntity<Object> update(@PathVariable Integer id, @RequestBody Subcategory subcategory) {
-        subcategoryService.updateSubcategory(id, subcategory);
+    ResponseEntity<Object> update(@PathVariable Integer id, @RequestBody SubcategoryDTO subcategoryDTO) {
+        subcategoryService.updateSubcategory(id, subcategoryDTO);
         return new ResponseEntity<>("", HttpStatus.ACCEPTED);
     }
 
