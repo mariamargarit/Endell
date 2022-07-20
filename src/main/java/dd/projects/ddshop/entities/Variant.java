@@ -27,7 +27,11 @@ public class Variant {
     @JoinColumn(name = "product_id")
     private Product productId;
 
-    @OneToMany(mappedBy = "variantId")
-    private List<VariantCombination> variantCombinations;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "variant_combination",
+            joinColumns = @JoinColumn(name = "variant_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "assigned_value_id",
+                    referencedColumnName = "id"))
+    private List<AssignedValue> variantCombinations;
 
 }

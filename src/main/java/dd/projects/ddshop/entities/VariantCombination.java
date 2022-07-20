@@ -14,12 +14,4 @@ public class VariantCombination {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "variant_id")
-    private Variant variantId;
-
-    @ManyToOne
-    @JoinColumn(name = "assigned_value_id")
-    private AssignedValue assignedValueId;
-
 }
