@@ -24,11 +24,11 @@ public class SubcategoryController {
         this.categoryService = categoryService;
     }
 
-    @PostMapping("/createSubcategory")
-    ResponseEntity<Object> create(@RequestBody SubcategoryDTO subcategoryDTO) {
+    @PostMapping("/createSubcategory/{id}")
+    ResponseEntity<Object> create(@RequestBody SubcategoryDTO subcategoryDTO, @PathVariable Integer id) {
 //        Category category = categoryService.readCategory(subcategoryDTO.getCategoryId());
 //        subcategoryService.createSubcategory(subcategoryDTO, category);
-        subcategoryService.createSubcategory(subcategoryDTO);
+        subcategoryService.createSubcategory(subcategoryDTO.getName(), id);
         return new ResponseEntity<>("", HttpStatus.CREATED);
     }
 
