@@ -14,7 +14,7 @@ public class Subcategory {
   private int id;
   private String name;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "category_id")
   private Category categoryId;
 
@@ -29,4 +29,8 @@ public class Subcategory {
   private List<Product> products;
 
 
+  public Subcategory(String name, Category category) {
+    this.name = name;
+    this.categoryId = category;
+  }
 }

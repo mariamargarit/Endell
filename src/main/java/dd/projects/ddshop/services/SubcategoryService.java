@@ -1,19 +1,16 @@
 package dd.projects.ddshop.services;
 
-import dd.projects.ddshop.dtos.ProductDTO;
 import dd.projects.ddshop.dtos.SubcategoryDTO;
 import dd.projects.ddshop.entities.Category;
-import dd.projects.ddshop.entities.Product;
 import dd.projects.ddshop.entities.Subcategory;
 import dd.projects.ddshop.mappers.CategoryMapperImpl;
-import dd.projects.ddshop.mappers.SubcategoryMapper;
 import dd.projects.ddshop.mappers.SubcategoryMapperImpl;
+import dd.projects.ddshop.repos.CategoryRepository;
 import dd.projects.ddshop.repos.SubcategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
@@ -23,24 +20,29 @@ public class SubcategoryService {
     private final SubcategoryMapperImpl subcategoryMapper;
     private final CategoryMapperImpl categoryMapper;
 
+    private final CategoryRepository categoryRepository;
     @Autowired
-    public SubcategoryService(SubcategoryRepository subcategoryRepository, SubcategoryMapperImpl subcategoryMapper, CategoryMapperImpl categoryMapper) {
+    public SubcategoryService(SubcategoryRepository subcategoryRepository, SubcategoryMapperImpl subcategoryMapper, CategoryMapperImpl categoryMapper, CategoryRepository categoryRepository) {
         this.subcategoryRepository = subcategoryRepository;
         this.subcategoryMapper = subcategoryMapper;
         this.categoryMapper = categoryMapper;
+        this.categoryRepository = categoryRepository;
     }
 
-    public static Subcategory getSubcategoryFromDTO(SubcategoryDTO subcategoryDTO, Category category) {
-        Subcategory subcategory = new Subcategory();
-        subcategory.setName(subcategoryDTO.getName());
-        subcategory.setCategoryId(category);
-        return subcategory;
-    }
+//    public static Subcategory getSubcategoryFromDTO(SubcategoryDTO subcategoryDTO, Category category) {
+//        Subcategory subcategory = new Subcategory();
+//        subcategory.setName(subcategoryDTO.getName());
+//        subcategory.setCategoryId(category);
+//        return subcategory;
+//    }
 
-    public void createSubcategory (SubcategoryDTO subcategoryDTO) {
+    public void createSubcategory (final String name, final int id) {
 //        Subcategory subcategory = getSubcategoryFromDTO(subcategoryDTO, category);
 //        subcategoryRepository.save(subcategory);
-        subcategoryRepository.save(subcategoryMapper.toSubcategory(subcategoryDTO));
+//        subcategoryRepository.save(subcategoryMapper.toSubcategory(subcategoryDTO));
+        final Category category = categoryRepository.getReferenceById(id);
+        final Subcategory subcategory = new Subcategory(name, category);
+        subcategoryRepository.save(subcategory);
     }
 
     public List<Subcategory> getSubcategories() { return subcategoryRepository.findAll(); }
