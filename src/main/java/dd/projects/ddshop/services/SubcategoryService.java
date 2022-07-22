@@ -19,7 +19,6 @@ public class SubcategoryService {
     private final SubcategoryRepository subcategoryRepository;
     private final SubcategoryMapperImpl subcategoryMapper;
     private final CategoryMapperImpl categoryMapper;
-
     private final CategoryRepository categoryRepository;
     @Autowired
     public SubcategoryService(SubcategoryRepository subcategoryRepository, SubcategoryMapperImpl subcategoryMapper, CategoryMapperImpl categoryMapper, CategoryRepository categoryRepository) {
@@ -29,23 +28,14 @@ public class SubcategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-//    public static Subcategory getSubcategoryFromDTO(SubcategoryDTO subcategoryDTO, Category category) {
-//        Subcategory subcategory = new Subcategory();
-//        subcategory.setName(subcategoryDTO.getName());
-//        subcategory.setCategoryId(category);
-//        return subcategory;
-//    }
-
     public void createSubcategory (final String name, final int id) {
-//        Subcategory subcategory = getSubcategoryFromDTO(subcategoryDTO, category);
-//        subcategoryRepository.save(subcategory);
-//        subcategoryRepository.save(subcategoryMapper.toSubcategory(subcategoryDTO));
         final Category category = categoryRepository.getReferenceById(id);
         final Subcategory subcategory = new Subcategory(name, category);
         subcategoryRepository.save(subcategory);
     }
 
     public List<Subcategory> getSubcategories() { return subcategoryRepository.findAll(); }
+
     public List<SubcategoryDTO> getSubcategory() {
         return subcategoryRepository.findAll()
                 .stream()
@@ -59,7 +49,6 @@ public class SubcategoryService {
     public void updateSubcategory(int subcategoryId, SubcategoryDTO newSubcategory) {
         Subcategory subcategory = subcategoryRepository.findById(subcategoryId).get();
         subcategory.setName(newSubcategory.getName());
-        subcategory.setCategoryId(categoryMapper.toCategory(newSubcategory.getCategoryId()));
         subcategoryRepository.save(subcategory);
     }
     public void deleteSubcategoryById(int id) { subcategoryRepository.deleteById(id); }

@@ -7,7 +7,8 @@ import lombok.Data;
 @AllArgsConstructor
 public class AttributeValueDTO {
 
+    private int id;
+
     private String val;
 
-    private ProductAttributeDTO productAttributeId;
 }

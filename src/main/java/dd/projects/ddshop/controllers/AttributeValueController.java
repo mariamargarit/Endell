@@ -30,9 +30,9 @@ public class AttributeValueController {
         return new ResponseEntity<>(attributeValueService.getAttributeValue(), HttpStatus.OK);
     }
 
-    @PostMapping("/createAttributeValue")
-    public ResponseEntity <Object> createAttributeValue (@RequestBody AttributeValueDTO attributeValueDTO){
-        attributeValueService.createAttributeValue(attributeValueDTO);
+    @PostMapping("/createAttributeValue/{id}")
+    public ResponseEntity <Object> createAttributeValue (@RequestBody AttributeValueDTO attributeValueDTO, @PathVariable Integer id){
+        attributeValueService.createAttributeValue(attributeValueDTO, id);
         return new ResponseEntity<>("", HttpStatus.CREATED);
     }
 

@@ -9,5 +9,5 @@ import java.util.List;
 @AllArgsConstructor
 public class CategoryDTO {
     private String name;
-    private List<SubcategoryDTO> subcategoryDTOList;
+    private List<SubcategoryDTO> subcategories;
 }

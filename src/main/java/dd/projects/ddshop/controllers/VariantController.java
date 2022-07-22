@@ -23,15 +23,12 @@ public class VariantController {
         this.variantService = variantService;
         this.productService = productService;
     }
-    @PostMapping("/createVariant")
-    public ResponseEntity<Object> create(@RequestBody VariantDTO variantDto) {
-//        Optional<Product> optionalProduct = productService.readProduct(variantDto.getProductId());
-//        Product product = optionalProduct.get();
-//        variantService.createVariant(variantDto,product);
-        variantService.createVariant(variantDto);
+    @PostMapping("/createVariant/{id}")
+    public ResponseEntity<Object> create(@RequestBody VariantDTO variantDto, @PathVariable Integer id) {
+        variantService.createVariant(variantDto, id);
         return new ResponseEntity<>("", HttpStatus.CREATED);
     }
-    @GetMapping("/getVariant")
+    @GetMapping("/getAllVariants")
     public ResponseEntity<List<VariantDTO>> read() {
         return new ResponseEntity<>(variantService.getVariant(), HttpStatus.OK);
     }

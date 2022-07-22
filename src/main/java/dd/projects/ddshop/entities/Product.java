@@ -1,6 +1,7 @@
 package dd.projects.ddshop.entities;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.aspectj.weaver.ast.Var;
 
@@ -11,6 +12,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class Product {
 
     @Id
@@ -21,11 +23,17 @@ public class Product {
 
     private String description;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "subcategory_id")
     private Subcategory subcategoryId;
 
     @OneToMany(mappedBy = "productId")
     private List<Variant> variants;
 
+    public Product(Product toProduct, Subcategory subcategory) {
+        this.id = toProduct.getId();
+        this.name = toProduct.getName();
+        this.description = toProduct.getDescription();
+        this.subcategoryId = subcategory;
+    }
 }

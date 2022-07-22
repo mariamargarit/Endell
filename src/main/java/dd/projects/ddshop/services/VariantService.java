@@ -1,14 +1,17 @@
 package dd.projects.ddshop.services;
 
+import dd.projects.ddshop.dtos.AssignedValueDTO;
 import dd.projects.ddshop.dtos.VariantDTO;
 import dd.projects.ddshop.entities.Product;
 import dd.projects.ddshop.entities.Variant;
+import dd.projects.ddshop.mappers.ProductMapperImpl;
 import dd.projects.ddshop.mappers.VariantMapperImpl;
+import dd.projects.ddshop.repos.AssignedValueRepository;
+import dd.projects.ddshop.repos.ProductRepository;
 import dd.projects.ddshop.repos.VariantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -18,26 +21,24 @@ public class VariantService {
 
     private final VariantRepository variantRepository;
     private final VariantMapperImpl variantMapper;
-
+    private final ProductRepository productRepository;
+    private final ProductMapperImpl productMapper;
+    private final AssignedValueRepository assignedValueRepository;
     @Autowired
-    public VariantService (VariantRepository variantRepository, VariantMapperImpl variantMapper){
+    public VariantService (VariantRepository variantRepository, VariantMapperImpl variantMapper, ProductRepository productRepository, ProductMapperImpl productMapper, AssignedValueRepository assignedValueRepository){
         this.variantRepository = variantRepository;
         this.variantMapper = variantMapper;
+        this.productRepository = productRepository;
+        this.productMapper = productMapper;
+        this.assignedValueRepository = assignedValueRepository;
     }
 
-    public static Variant getVariantFromDTO(VariantDTO variantDTO, Product product){
-        Variant variant = new Variant();
-        variant.setPrice(variantDTO.getPrice());
-        variant.setAvailableQuantity(variantDTO.getAvailableQuantity());
-        variant.setAddedDate(variantDTO.getAddedDate());
-        variant.setProductId(product);
-        return variant;
-    }
-
-    public void createVariant (VariantDTO variantDTO) {
-//        Variant variant = getVariantFromDTO(variantDTO, product);
-//        variantRepository.save(variant);
-        variantRepository.save(variantMapper.toVariant(variantDTO));
+    public void createVariant (VariantDTO variantDTO, Integer id) {
+        final Product product = productRepository.getReferenceById(id);
+        Variant variant = new Variant(variantMapper.toVariant(variantDTO), product);
+        for(AssignedValueDTO assignedValue : variantDTO.getAssignedValueDTOList())
+            variant.getAssignedValueDTOList().add(assignedValueRepository.getReferenceById(assignedValue.getId()));
+        variantRepository.save(variant);
     }
 
     public List<VariantDTO> getVariant() {

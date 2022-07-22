@@ -5,6 +5,7 @@ import dd.projects.ddshop.entities.AttributeValue;
 import dd.projects.ddshop.entities.ProductAttribute;
 import dd.projects.ddshop.mappers.AttributeValueMapperImpl;
 import dd.projects.ddshop.repos.AttributeValueRepository;
+import dd.projects.ddshop.repos.ProductAttributeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,15 +17,19 @@ import static java.util.stream.Collectors.toList;
 public class AttributeValueService {
     private final AttributeValueRepository attributeValueRepository;
     private final AttributeValueMapperImpl attributeValueMapper;
+    private final ProductAttributeRepository productAttributeRepository;
 
     @Autowired
-    public AttributeValueService (AttributeValueRepository attributeValueRepository, AttributeValueMapperImpl attributeValueMapper){
+    public AttributeValueService (AttributeValueRepository attributeValueRepository, AttributeValueMapperImpl attributeValueMapper, ProductAttributeRepository productAttributeRepository){
         this.attributeValueRepository = attributeValueRepository;
         this.attributeValueMapper = attributeValueMapper;
+        this.productAttributeRepository = productAttributeRepository;
     }
 
-    public void createAttributeValue (AttributeValueDTO attributeValueDTO) {
-        attributeValueRepository.save(attributeValueMapper.toAttributeValue(attributeValueDTO));
+    public void createAttributeValue (AttributeValueDTO attributeValueDTO, Integer id) {
+        final ProductAttribute productAttribute = productAttributeRepository.getReferenceById(id);
+        AttributeValue attributeValue = new AttributeValue(attributeValueMapper.toAttributeValue(attributeValueDTO), productAttribute);
+        attributeValueRepository.save(attributeValue);
     }
 
     public List<AttributeValueDTO> getAttributeValue() {

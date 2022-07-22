@@ -49,7 +49,6 @@ public class CartService {
     public void updateCart(int id, CartDTO newCartDTO) {
         Cart cart = cartRepository.findById(id).get();
         cart.setTotalPrice(newCartDTO.getTotalPrice());
-        cart.setUserId(userMapper.toUser(newCartDTO.getUserId()));
         cartRepository.save(cart);
     }
     public void deleteCart(int id) { cartRepository.deleteById(id); }

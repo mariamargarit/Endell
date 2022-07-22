@@ -18,7 +18,7 @@ public class AssignedValue {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "attribute_value_id")
     private AttributeValue attributeValueId;
 
@@ -26,7 +26,7 @@ public class AssignedValue {
     @JoinColumn(name = "product_attribute_id")
     private ProductAttribute productAttributeId;
 
-    @ManyToMany(mappedBy = "variantCombinations")
+    @ManyToMany(mappedBy = "assignedValueDTOList")
     private List<Variant> variantCombinations;
 
     public AssignedValue(AttributeValue value, ProductAttribute productAttribute) {

@@ -1,12 +1,14 @@
 package dd.projects.ddshop.entities;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class Subcategory {
 
   @Id
@@ -18,11 +20,11 @@ public class Subcategory {
   @JoinColumn(name = "category_id")
   private Category categoryId;
 
-  @ManyToMany(cascade = CascadeType.ALL)
-  @JoinTable(name = "subcategory_product_attribute",
-          joinColumns = @JoinColumn(name = "subcategory_id", referencedColumnName = "id"),
-          inverseJoinColumns = @JoinColumn(name = "product_attribute_id",
-                  referencedColumnName = "id"))
+  @ManyToMany(mappedBy = "subcategories", fetch = FetchType.LAZY,
+          cascade = {
+                  CascadeType.PERSIST,
+                  CascadeType.MERGE
+          })
   private List<ProductAttribute> productAttributes;
 
   @OneToMany(mappedBy = "subcategoryId")
