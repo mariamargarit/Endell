@@ -3,10 +3,10 @@ package dd.projects.ddshop.services;
 import dd.projects.ddshop.dtos.ProductDTO;
 import dd.projects.ddshop.entities.Product;
 import dd.projects.ddshop.entities.Subcategory;
-import dd.projects.ddshop.mappers.ProductMapper;
 import dd.projects.ddshop.mappers.ProductMapperImpl;
 import dd.projects.ddshop.repos.ProductRepository;
 import dd.projects.ddshop.repos.SubcategoryRepository;
+import dd.projects.ddshop.validators.ProductValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,13 +19,14 @@ import static java.util.stream.Collectors.toList;
 @Service
 public class ProductService {
     private final ProductRepository productRepository;
-
+    private final ProductValidator productValidator;
     private final ProductMapperImpl productMapper;
     private final SubcategoryRepository subcategoryRepository;
 
     @Autowired
-    public ProductService (ProductRepository productRepository, ProductMapperImpl productMapper, SubcategoryRepository subcategoryRepository){
+    public ProductService (ProductRepository productRepository, ProductValidator productValidator, ProductMapperImpl productMapper, SubcategoryRepository subcategoryRepository){
         this.productRepository = productRepository;
+        this.productValidator = productValidator;
         this.productMapper = productMapper;
         this.subcategoryRepository = subcategoryRepository;
     }
@@ -34,6 +35,7 @@ public class ProductService {
     }
 
     public void createProduct (ProductDTO productDto, Integer id) {
+        productValidator.validateProduct(productDto);
         Subcategory subcategory = subcategoryRepository.getReferenceById(id);
         Product product = new Product(productMapper.toProduct(productDto), subcategory);
         product.setVariants(new ArrayList<>());
