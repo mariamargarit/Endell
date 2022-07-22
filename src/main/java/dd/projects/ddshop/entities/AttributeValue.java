@@ -18,12 +18,16 @@ public class AttributeValue {
 
     private String val;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "product_attribute_id")
     private ProductAttribute productAttributeId;
 
     public AttributeValue(String attribute, ProductAttribute productAttribute) {
         this.val = attribute;
+        this.productAttributeId = productAttribute;
+    }
+    public AttributeValue(AttributeValue attributeValue, ProductAttribute productAttribute) {
+        this.val = attributeValue.getVal();
         this.productAttributeId = productAttribute;
     }
 

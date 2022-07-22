@@ -10,5 +10,5 @@ import lombok.Data;
 public class CartDTO {
 
     private float totalPrice;
-    private UserDTO userId;
+    //private UserDTO userId;
 }

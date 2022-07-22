@@ -23,11 +23,9 @@ public class ProductController {
         this.subcategoryService = subcategoryService;
     }
 
-    @PostMapping("/createProduct")
-    public ResponseEntity<Object> create(@RequestBody ProductDTO productDto) {
-//        Subcategory subcategory = subcategoryService.readSubcategory(productDto.getSubcategoryId().getCategoryId());
-//        productService.createProduct(productDto, subcategory);
-        productService.createProduct(productDto);
+    @PostMapping("/createProduct/{id}")
+    public ResponseEntity<Object> create(@RequestBody ProductDTO productDto, @PathVariable Integer id) {
+        productService.createProduct(productDto, id);
         return new ResponseEntity<>("", HttpStatus.CREATED);
     }
 

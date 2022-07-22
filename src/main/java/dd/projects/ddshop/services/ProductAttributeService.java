@@ -33,18 +33,17 @@ public class ProductAttributeService {
     }
 
     public void createProductAttribute(ProductAttributeDTO productAttributeDTO) {
-        ProductAttribute productAttribute = new ProductAttribute();
-        for(AttributeValueDTO attribute: productAttributeDTO.getAttributeValue())
+        ProductAttribute productAttribute = new ProductAttribute(productAttributeDTO.getName());
+        for(AttributeValueDTO attribute: productAttributeDTO.getAttributeValues())
             productAttribute.getAttributeValues().add(new AttributeValue(attribute.getVal(), productAttribute));
 
         for(SubcategoryDTO id : productAttributeDTO.getSubcategories())
-            productAttribute.getSubcategories().add(subcategoryRepository.getReferenceById(id.getSubcategoryId()));
+            productAttribute.getSubcategories().add(subcategoryRepository.getReferenceById(id.getId()));
 
         productAttributeRepository.save(productAttribute);
 
         for (AttributeValue value : productAttribute.getAttributeValues())
             assignedValueRepository.save(new AssignedValue(value,productAttribute));
-        productAttributeRepository.save(productAttribute);
     }
     public ProductAttribute readProductAttribute(Integer id) { return productAttributeRepository.getReferenceById(id); }
     public List<ProductAttributeDTO> getProductAttribute() {

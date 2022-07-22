@@ -10,7 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ProductAttributeDTO {
     private String name;
-    private List<AttributeValueDTO> attributeValue;
+    private List<AttributeValueDTO> attributeValues;
     private List <SubcategoryDTO> subcategories;
 
 }

@@ -6,9 +6,11 @@ import dd.projects.ddshop.entities.Subcategory;
 import dd.projects.ddshop.mappers.ProductMapper;
 import dd.projects.ddshop.mappers.ProductMapperImpl;
 import dd.projects.ddshop.repos.ProductRepository;
+import dd.projects.ddshop.repos.SubcategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,28 +21,23 @@ public class ProductService {
     private final ProductRepository productRepository;
 
     private final ProductMapperImpl productMapper;
+    private final SubcategoryRepository subcategoryRepository;
 
     @Autowired
-    public ProductService (ProductRepository productRepository, ProductMapperImpl productMapper){
+    public ProductService (ProductRepository productRepository, ProductMapperImpl productMapper, SubcategoryRepository subcategoryRepository){
         this.productRepository = productRepository;
         this.productMapper = productMapper;
-    }
-
-    public static Product getProductFromDTO(ProductDTO productDto, Subcategory subcategory) {
-        Product product = new Product();
-        product.setName(productDto.getName());
-        product.setDescription(productDto.getDescription());
-        product.setSubcategoryId(subcategory);
-        return product;
+        this.subcategoryRepository = subcategoryRepository;
     }
     public Optional<Product> readProduct(Integer productId) {
         return productRepository.findById(productId);
     }
 
-    public void createProduct (ProductDTO productDto) {
-//        Product product = getProductFromDTO(productDto, subcategory);
-//        productRepository.save(product);
-        productRepository.save(productMapper.toProduct(productDto));
+    public void createProduct (ProductDTO productDto, Integer id) {
+        Subcategory subcategory = subcategoryRepository.getReferenceById(id);
+        Product product = new Product(productMapper.toProduct(productDto), subcategory);
+        product.setVariants(new ArrayList<>());
+        productRepository.save(product);
     }
 
     public List<ProductDTO> getProduct() {

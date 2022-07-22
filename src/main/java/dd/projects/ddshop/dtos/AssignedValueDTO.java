@@ -8,4 +8,5 @@ import lombok.Data;
 public class AssignedValueDTO {
     private AttributeValueDTO attributeValueId;
     private ProductAttributeDTO productAttributeId;
+    private int id;
 }
