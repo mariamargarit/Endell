@@ -2,6 +2,7 @@ package dd.projects.ddshop.validators;
 
 import dd.projects.ddshop.AppConfiguration;
 import dd.projects.ddshop.dtos.ProductDTO;
+import dd.projects.ddshop.exceptions.AlreadyExistsException;
 import dd.projects.ddshop.exceptions.InvalidInputException;
 import dd.projects.ddshop.repos.ProductRepository;
 import org.springframework.context.MessageSource;
@@ -23,7 +24,7 @@ public class ProductValidator {
             throw new InvalidInputException(messageSource.getMessage("api.error.empty.fields", null, Locale.ENGLISH));
         }
         if(productRepository.findByName(productDTO.getName()) != null) {
-            throw new InvalidInputException(messageSource.getMessage("api.error.product.already.exists", null, Locale.ENGLISH));
+            throw new AlreadyExistsException(messageSource.getMessage("api.error.product.already.exists", null, Locale.ENGLISH));
         }
     }
 }

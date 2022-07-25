@@ -2,17 +2,16 @@ package dd.projects.ddshop.services;
 
 import dd.projects.ddshop.dtos.UserCreationDTO;
 import dd.projects.ddshop.dtos.UserDTO;
-import dd.projects.ddshop.entities.Subcategory;
 import dd.projects.ddshop.entities.User;
 import dd.projects.ddshop.mappers.AddressMapperImpl;
 import dd.projects.ddshop.mappers.UserCreationMapperImpl;
-import dd.projects.ddshop.mappers.UserMapper;
 import dd.projects.ddshop.mappers.UserMapperImpl;
 import dd.projects.ddshop.repos.UserRepository;
+import dd.projects.ddshop.utils.Password;
+import dd.projects.ddshop.validators.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -24,16 +23,22 @@ public class UserService {
     private final UserMapperImpl userMapper;
     private final AddressMapperImpl addressMapper;
 
+    private final UserValidator userValidator;
+
     @Autowired
-    public UserService(UserRepository userRepository, UserMapperImpl userMapper, UserCreationMapperImpl userCreationMapper, AddressMapperImpl addressMapper) {
+    public UserService(UserRepository userRepository, UserMapperImpl userMapper, UserCreationMapperImpl userCreationMapper, AddressMapperImpl addressMapper, UserValidator userValidator) {
         this.userRepository = userRepository;
         this.userCreationMapper = userCreationMapper;
         this.userMapper = userMapper;
         this.addressMapper = addressMapper;
+        this.userValidator = userValidator;
     }
 
     public User createUser(UserCreationDTO userCreationDTO){
-        return userRepository.save(userCreationMapper.toUser(userCreationDTO));
+        userValidator.validateUser(userCreationDTO);
+        final User user = userMapper.toUser(userCreationDTO);
+        user.setPassword(Password.getMD5EncryptedValue(user.getPassword()));
+        return userRepository.save(user);
     }
     public List<UserDTO> getUsers() {
         return userRepository.findAll()
