@@ -29,7 +29,7 @@ public class Variant {
     @JoinColumn(name = "product_id")
     private Product productId;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "variant_combination",
             joinColumns = @JoinColumn(name = "variant_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "assigned_value_id",
