@@ -26,7 +26,7 @@ public class AssignedValue {
     @JoinColumn(name = "product_attribute_id")
     private ProductAttribute productAttributeId;
 
-    @ManyToMany(mappedBy = "assignedValueDTOList")
+    @ManyToMany(mappedBy = "assignedValueDTOList", cascade = CascadeType.MERGE)
     private List<Variant> variantCombinations;
 
     public AssignedValue(AttributeValue value, ProductAttribute productAttribute) {

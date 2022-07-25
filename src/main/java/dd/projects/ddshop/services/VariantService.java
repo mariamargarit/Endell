@@ -35,9 +35,8 @@ public class VariantService {
 
     public void createVariant (VariantDTO variantDTO, Integer id) {
         final Product product = productRepository.getReferenceById(id);
-        Variant variant = new Variant(variantMapper.toVariant(variantDTO), product);
-        for(AssignedValueDTO assignedValue : variantDTO.getAssignedValueDTOList())
-            variant.getAssignedValueDTOList().add(assignedValueRepository.getReferenceById(assignedValue.getId()));
+        Variant variant = variantMapper.toVariant(variantDTO);
+        variant.setProductId(product);
         variantRepository.save(variant);
     }
 
