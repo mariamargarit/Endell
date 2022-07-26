@@ -10,6 +10,7 @@ import dd.projects.ddshop.mappers.ProductAttributeMapperImpl;
 import dd.projects.ddshop.repos.AssignedValueRepository;
 import dd.projects.ddshop.repos.ProductAttributeRepository;
 import dd.projects.ddshop.repos.SubcategoryRepository;
+import dd.projects.ddshop.validators.ProductAttributeValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,7 @@ public class ProductAttributeService {
     private final SubcategoryRepository subcategoryRepository;
     private final AssignedValueRepository assignedValueRepository;
     private final ProductAttributeMapperImpl productAttributeMapper;
+    private final ProductAttributeValidator productAttributeValidator;
 
     @Autowired
     public ProductAttributeService(ProductAttributeMapperImpl productAttributeMapper, ProductAttributeRepository productAttributeRepository, SubcategoryRepository subcategoryRepository, AssignedValueRepository assignedValueRepository) {
@@ -30,9 +32,11 @@ public class ProductAttributeService {
         this.subcategoryRepository = subcategoryRepository;
         this.assignedValueRepository = assignedValueRepository;
         this.productAttributeMapper = productAttributeMapper;
+        this.productAttributeValidator = new ProductAttributeValidator(productAttributeRepository);
     }
 
     public void createProductAttribute(ProductAttributeDTO productAttributeDTO) {
+        productAttributeValidator.validateProductAttribute(productAttributeDTO);
         ProductAttribute productAttribute = new ProductAttribute(productAttributeDTO.getName());
         for(AttributeValueDTO attribute: productAttributeDTO.getAttributeValues())
             productAttribute.getAttributeValues().add(new AttributeValue(attribute.getVal(), productAttribute));
@@ -45,7 +49,6 @@ public class ProductAttributeService {
         for (AttributeValue value : productAttribute.getAttributeValues())
             assignedValueRepository.save(new AssignedValue(value,productAttribute));
     }
-    public ProductAttribute readProductAttribute(Integer id) { return productAttributeRepository.getReferenceById(id); }
     public List<ProductAttributeDTO> getProductAttribute() {
         return productAttributeRepository.findAll()
                 .stream()
