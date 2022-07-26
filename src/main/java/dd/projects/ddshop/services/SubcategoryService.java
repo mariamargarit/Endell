@@ -7,6 +7,7 @@ import dd.projects.ddshop.mappers.CategoryMapperImpl;
 import dd.projects.ddshop.mappers.SubcategoryMapperImpl;
 import dd.projects.ddshop.repos.CategoryRepository;
 import dd.projects.ddshop.repos.SubcategoryRepository;
+import dd.projects.ddshop.validators.SubcategoryValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,15 +21,18 @@ public class SubcategoryService {
     private final SubcategoryMapperImpl subcategoryMapper;
     private final CategoryMapperImpl categoryMapper;
     private final CategoryRepository categoryRepository;
+    private final SubcategoryValidator subcategoryValidator;
     @Autowired
     public SubcategoryService(SubcategoryRepository subcategoryRepository, SubcategoryMapperImpl subcategoryMapper, CategoryMapperImpl categoryMapper, CategoryRepository categoryRepository) {
         this.subcategoryRepository = subcategoryRepository;
         this.subcategoryMapper = subcategoryMapper;
         this.categoryMapper = categoryMapper;
         this.categoryRepository = categoryRepository;
+        this.subcategoryValidator = new SubcategoryValidator(subcategoryRepository);
     }
 
     public void createSubcategory (final String name, final int id) {
+        subcategoryValidator.validateSubcategory(name);
         final Category category = categoryRepository.getReferenceById(id);
         final Subcategory subcategory = new Subcategory(name, category);
         subcategoryRepository.save(subcategory);

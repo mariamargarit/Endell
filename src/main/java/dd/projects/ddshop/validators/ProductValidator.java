@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Locale;
 
-@Service
 public class ProductValidator {
     private final ProductRepository productRepository;
     private final MessageSource messageSource;

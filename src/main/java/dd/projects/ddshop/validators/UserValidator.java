@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Locale;
 
-@Service
 public class UserValidator {
     private final UserRepository userRepository;
     private final MessageSource messageSource;
