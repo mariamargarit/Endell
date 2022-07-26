@@ -17,7 +17,7 @@ public class UserValidator {
 
     public UserValidator(UserRepository userRepository) {
         this.userRepository = userRepository;
-        messageSource = new AppConfiguration().messageSource();
+        this.messageSource = new AppConfiguration().messageSource();
     }
 
     public void validateUser(final UserCreationDTO userCreationDTO) {

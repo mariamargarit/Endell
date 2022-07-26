@@ -16,7 +16,7 @@ public class ProductValidator {
 
     public ProductValidator(ProductRepository productRepository) {
         this.productRepository = productRepository;
-        messageSource = new AppConfiguration().messageSource();
+        this.messageSource = new AppConfiguration().messageSource();
     }
 
     public void validateProduct(ProductDTO productDTO){
