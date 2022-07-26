@@ -24,14 +24,11 @@ public class ProductService {
     private final SubcategoryRepository subcategoryRepository;
 
     @Autowired
-    public ProductService (ProductRepository productRepository, ProductValidator productValidator, ProductMapperImpl productMapper, SubcategoryRepository subcategoryRepository){
+    public ProductService (ProductRepository productRepository, ProductMapperImpl productMapper, SubcategoryRepository subcategoryRepository){
         this.productRepository = productRepository;
-        this.productValidator = productValidator;
+        this.productValidator = new ProductValidator(productRepository);
         this.productMapper = productMapper;
         this.subcategoryRepository = subcategoryRepository;
-    }
-    public Optional<Product> readProduct(Integer productId) {
-        return productRepository.findById(productId);
     }
 
     public void createProduct (ProductDTO productDto, Integer id) {

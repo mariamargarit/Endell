@@ -13,10 +13,11 @@ import java.util.Locale;
 @Service
 public class ProductValidator {
     private final ProductRepository productRepository;
-    private final MessageSource messageSource = new AppConfiguration().messageSource();
+    private final MessageSource messageSource;
 
     public ProductValidator(ProductRepository productRepository) {
         this.productRepository = productRepository;
+        messageSource = new AppConfiguration().messageSource();
     }
 
     public void validateProduct(ProductDTO productDTO){

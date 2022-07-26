@@ -1,5 +1,6 @@
 package dd.projects.ddshop.services;
 
+import dd.projects.ddshop.AppConfiguration;
 import dd.projects.ddshop.dtos.UserCreationDTO;
 import dd.projects.ddshop.dtos.UserDTO;
 import dd.projects.ddshop.entities.User;
@@ -26,12 +27,12 @@ public class UserService {
     private final UserValidator userValidator;
 
     @Autowired
-    public UserService(UserRepository userRepository, UserMapperImpl userMapper, UserCreationMapperImpl userCreationMapper, AddressMapperImpl addressMapper, UserValidator userValidator) {
+    public UserService(UserRepository userRepository, UserMapperImpl userMapper, UserCreationMapperImpl userCreationMapper, AddressMapperImpl addressMapper) {
         this.userRepository = userRepository;
         this.userCreationMapper = userCreationMapper;
         this.userMapper = userMapper;
         this.addressMapper = addressMapper;
-        this.userValidator = userValidator;
+        this.userValidator = new UserValidator(userRepository);
     }
 
     public User createUser(UserCreationDTO userCreationDTO){

@@ -14,10 +14,11 @@ import java.util.Locale;
 @Service
 public class UserValidator {
     private final UserRepository userRepository;
-    private final MessageSource messageSource = new AppConfiguration().messageSource();
+    private final MessageSource messageSource;
 
     public UserValidator(UserRepository userRepository) {
         this.userRepository = userRepository;
+        messageSource = new AppConfiguration().messageSource();
     }
 
     public void validateUser(final UserCreationDTO userCreationDTO) {
