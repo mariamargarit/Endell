@@ -6,9 +6,9 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class CartEntryDTO {
+    private int id;
     private int quantity;
     private float pricePerPiece;
     private float totalPricePerEntry;
     private VariantDTO variantId;
-    private CartDTO cartId;
 }

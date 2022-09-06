@@ -1,6 +1,8 @@
 package dd.projects.ddshop.entities;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -8,6 +10,8 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class CartEntry {
 
     @Id
@@ -28,4 +32,11 @@ public class CartEntry {
     @JoinColumn(name = "cart_id")
     private Cart cartId;
 
+    public CartEntry(int quantity, float pricePerPiece, float totalPricePerEntry, Variant variantId, Cart cartId) {
+        this.quantity = quantity;
+        this.pricePerPiece = pricePerPiece;
+        this.totalPricePerEntry = totalPricePerEntry;
+        this.variantId = variantId;
+        this.cartId = cartId;
+    }
 }

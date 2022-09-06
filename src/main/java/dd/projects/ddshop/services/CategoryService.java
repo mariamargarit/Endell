@@ -17,12 +17,14 @@ public class CategoryService {
     private final CategoryRepository categoryRepository;
     private final CategoryMapperImpl categoryMapper;
     private final CategoryValidator categoryValidator;
+    private final SubcategoryService subcategoryService;
 
     @Autowired
-    public CategoryService(CategoryRepository categoryRepository, CategoryMapperImpl categoryMapper) {
+    public CategoryService(CategoryRepository categoryRepository, CategoryMapperImpl categoryMapper, SubcategoryService subcategoryService) {
         this.categoryRepository = categoryRepository;
         this.categoryMapper = categoryMapper;
         this.categoryValidator = new CategoryValidator(categoryRepository);
+        this.subcategoryService = subcategoryService;
     }
 
     public Category createCategory(CategoryDTO categoryDTO) {
@@ -42,5 +44,11 @@ public class CategoryService {
         category.setName(newCategoryDTO.getName());
         categoryRepository.save(category);
     }
-    public void deleteCategoryById(int id) { categoryRepository.deleteById(id); }
+    public void deleteCategoryById(int id) {
+        Category category = categoryRepository.findById(id).get();
+        for(int i = 0; i < category.getSubcategories().size(); i++){
+            subcategoryService.deleteSubcategoryById(category.getSubcategories().get(i).getId());
+        }
+        categoryRepository.deleteById(id);
+    }
 }

@@ -1,5 +1,6 @@
 package dd.projects.ddshop.entities;
 
+import com.sun.istack.NotNull;
 import dd.projects.ddshop.enumerated.PaymentType;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,4 +34,5 @@ public class UserOrder {
     @OneToOne
     @JoinColumn(name = "cart_id")
     private Cart cartId;
+
 }

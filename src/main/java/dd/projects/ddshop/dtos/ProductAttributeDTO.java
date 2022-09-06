@@ -9,6 +9,8 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 public class ProductAttributeDTO {
+
+    private int id;
     private String name;
     private List<AttributeValueDTO> attributeValues;
     private List <SubcategoryDTO> subcategories;
