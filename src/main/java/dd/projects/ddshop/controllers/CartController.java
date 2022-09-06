@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin("http://localhost:4200")
 public class CartController {
     private final CartService cartService;
     private final UserService userService;
@@ -25,15 +26,15 @@ public class CartController {
         this.userService = userService;
     }
 
-    @PostMapping("/createCart")
-    public ResponseEntity<Object> create(@RequestBody CartDTO cartDTO) {
-        cartService.createCart(cartDTO);
+    @PostMapping("/createCart/{id}")
+    public ResponseEntity<Object> create(@RequestBody CartDTO cartDTO, @PathVariable("id") int id) {
+        cartService.createCart(cartDTO, id);
         return new ResponseEntity<>("", HttpStatus.CREATED);
     }
 
     @GetMapping("/getAllCarts")
-    public ResponseEntity<List<CartDTO>> read() {
-        return new ResponseEntity<>(cartService.getCarts(), HttpStatus.OK);
+    public ResponseEntity<CartDTO> read(@RequestParam(name="email") String email) {
+        return new ResponseEntity<>(cartService.getCarts(email), HttpStatus.OK);
     }
 
     @PutMapping("/updateCart/{id}")

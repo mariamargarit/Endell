@@ -1,5 +1,6 @@
 package dd.projects.ddshop.entities;
 
+import dd.projects.ddshop.enumerated.ERole;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,6 +25,9 @@ public class User {
     private String phoneNumber;
 
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    private ERole role;
 
     @OneToOne
     @JoinColumn(name="default_delivery_address")

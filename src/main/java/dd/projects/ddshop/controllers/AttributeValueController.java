@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin("http://localhost:4200")
 public class AttributeValueController {
     private final AttributeValueService attributeValueService;
 
@@ -25,7 +26,7 @@ public class AttributeValueController {
         this.productAttributeService = productAttributeService;
     }
 
-    @GetMapping("/getAttributeValue")
+    @GetMapping("/getAllAttributeValues")
     public ResponseEntity<List<AttributeValueDTO>> getAttributeValue() {
         return new ResponseEntity<>(attributeValueService.getAttributeValue(), HttpStatus.OK);
     }
@@ -42,7 +43,7 @@ public class AttributeValueController {
         return new ResponseEntity<>("",HttpStatus.OK);
     }
 
-    @DeleteMapping("/deleteAttributeValueById/{id}")
+    @DeleteMapping("/deleteAttributeValue/{id}")
     void deleteAttributeValueById (@PathVariable Integer id) {
         attributeValueService.deleteAttributeValueById(id);
     }

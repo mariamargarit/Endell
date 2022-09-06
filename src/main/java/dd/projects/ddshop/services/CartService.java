@@ -1,16 +1,14 @@
 package dd.projects.ddshop.services;
 
 import dd.projects.ddshop.dtos.CartDTO;
-import dd.projects.ddshop.dtos.CartEntryDTO;
-import dd.projects.ddshop.dtos.ProductDTO;
 import dd.projects.ddshop.entities.*;
 import dd.projects.ddshop.mappers.CartMapperImpl;
 import dd.projects.ddshop.mappers.UserMapperImpl;
 import dd.projects.ddshop.repos.CartRepository;
+import dd.projects.ddshop.repos.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -21,30 +19,27 @@ public class CartService {
     private final CartRepository cartRepository;
     private final CartMapperImpl cartMapper;
     private final UserMapperImpl userMapper;
+    private final UserRepository userRepository;
 
     @Autowired
-    public CartService (CartRepository cartRepository, CartMapperImpl cartMapper, UserMapperImpl userMapper){
+    public CartService (CartRepository cartRepository, CartMapperImpl cartMapper, UserMapperImpl userMapper, UserRepository userRepository){
         this.cartRepository = cartRepository;
         this.cartMapper = cartMapper;
         this.userMapper = userMapper;
+        this.userRepository = userRepository;
     }
-    public static Cart getCartFromDTO(CartDTO cartDTO, User user) {
-        Cart cart = new Cart();
-        cart.setTotalPrice(cartDTO.getTotalPrice());
+    public void createCart(CartDTO cartDTO, int id){
+        Cart cart = cartMapper.toCart(cartDTO);
+        User user = userRepository.getReferenceById(id);
         cart.setUserId(user);
-        return cart;
-    }
-    public void createCart(CartDTO cartDTO){
-        cartRepository.save(cartMapper.toCart(cartDTO));
+        cart.setValid(true);
+        cartRepository.save(cart);
     }
     public Cart readCart(Integer id) {
         return cartRepository.getReferenceById(id);
     }
-    public List<CartDTO> getCarts() {
-        return cartRepository.findAll()
-                .stream()
-                .map(cartMapper::toCartDTO)
-                .collect(toList());
+    public CartDTO getCarts(String email) {
+        return cartMapper.toCartDTO(cartRepository.findCartByUserId(userRepository.findByEmail(email)));
     }
     public void updateCart(int id, CartDTO newCartDTO) {
         Cart cart = cartRepository.findById(id).get();

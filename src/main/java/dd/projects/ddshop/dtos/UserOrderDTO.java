@@ -11,4 +11,5 @@ public class UserOrderDTO {
     private AddressDTO invoiceAddress;
     private UserDTO userId;
     private CartDTO cartId;
+    private Boolean valid;
 }

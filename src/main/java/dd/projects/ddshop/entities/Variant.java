@@ -25,6 +25,8 @@ public class Variant {
     @Temporal(TemporalType.DATE)
     private Date addedDate;
 
+    private String variantPicture;
+
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product productId;

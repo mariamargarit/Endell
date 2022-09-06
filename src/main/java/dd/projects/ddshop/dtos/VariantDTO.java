@@ -11,11 +11,15 @@ import java.util.List;
 @AllArgsConstructor
 public class VariantDTO {
 
+    private int id;
+
     private float price;
 
     private int availableQuantity;
 
     private Date addedDate;
+
+    private String variantPicture;
 
     private ProductDTO productId;
 

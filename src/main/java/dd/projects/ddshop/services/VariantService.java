@@ -37,6 +37,7 @@ public class VariantService {
         final Product product = productRepository.getReferenceById(id);
         Variant variant = variantMapper.toVariant(variantDTO);
         variant.setProductId(product);
+        variant.setVariantPicture("https://s3.ap-south-1.amazonaws.com/choosemybicycle.webp/images/bicycles/nuze-s3-new.webp");
         variantRepository.save(variant);
     }
 
