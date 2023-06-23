@@ -33,9 +33,9 @@ dependencies {
 	implementation 'org.mapstruct:mapstruct:1.5.3.Final'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
 	implementation 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
-	//For Gradle, add to dependencies section of build.gradle
-	implementation 'com.cloudinary:cloudinary-http44:1.31.0'}
-
+	implementation 'com.cloudinary:cloudinary-http44:1.31.0'
+	implementation 'com.google.code.gson:gson:2.10.1'
+	implementation "com.stripe:stripe-java:22.24.0"}
 tasks.named('test') {
 	useJUnitPlatform()
 }

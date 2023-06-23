@@ -77,7 +77,7 @@ public class CartEntryService {
                 .collect(toList());
     }
 
-    public void updateCartEntry (int id, CartEntryDTO newCartEntryDTO) {
+    public void updateCartEntry (Integer id, CartEntryDTO newCartEntryDTO) {
         CartEntry cartEntry = cartEntryRepository.findById(id).get();
         cartEntry.setQuantity(newCartEntryDTO.getQuantity());
         cartEntry.setPricePerPiece(newCartEntryDTO.getPricePerPiece());
@@ -87,7 +87,10 @@ public class CartEntryService {
         cartEntryRepository.save(cartEntry);
     }
 
-    public void deleteCartEntry (int id) {
+    public void deleteCartEntry (Integer id) {
+        CartEntry entry = cartEntryRepository.getReferenceById(id);
+        Cart cart = entry.getCartId();
+        cart.setTotalPrice(cart.getTotalPrice() - entry.getTotalPricePerEntry());
         cartEntryRepository.deleteById(id);
     }
 }

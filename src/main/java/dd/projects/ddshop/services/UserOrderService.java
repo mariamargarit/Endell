@@ -37,7 +37,7 @@ public class UserOrderService {
     public void createOrder(UserOrderDTO orderDTO) {
         Address address = addressMapper.toAddress(orderDTO.getDeliveryAddress());
         User user = userRepository.getReferenceById(orderDTO.getUserId());
-        Cart cart = cartRepository.getReferenceById(orderDTO.getCartId());
+        Cart cart = cartRepository.findCartByUserIdAndValid(user, true);
         UserOrder order = new UserOrder(orderDTO, address, user, cart);
         cart.setValid(false);
         cartRepository.save(cart);
