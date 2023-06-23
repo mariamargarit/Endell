@@ -1,35 +1,35 @@
 package dd.projects.ddshop.services;
 
-import dd.projects.ddshop.AppConfiguration;
-import dd.projects.ddshop.dtos.*;
+import dd.projects.ddshop.dtos.UserCreationDTO;
+import dd.projects.ddshop.dtos.UserDTO;
+import dd.projects.ddshop.dtos.UserLoginDTO;
+import dd.projects.ddshop.dtos.UserRoleDTO;
 import dd.projects.ddshop.entities.User;
 import dd.projects.ddshop.enumerated.ERole;
 import dd.projects.ddshop.exceptions.InvalidInputException;
-import dd.projects.ddshop.mappers.AddressMapperImpl;
-import dd.projects.ddshop.mappers.UserCreationMapperImpl;
-import dd.projects.ddshop.mappers.UserMapperImpl;
+import dd.projects.ddshop.mappers.AddressMapper;
+import dd.projects.ddshop.mappers.UserCreationMapper;
+import dd.projects.ddshop.mappers.UserMapper;
 import dd.projects.ddshop.repos.UserRepository;
 import dd.projects.ddshop.utils.Password;
 import dd.projects.ddshop.validators.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
 @Service
 public class UserService {
     private final UserRepository userRepository;
-    private final UserCreationMapperImpl userCreationMapper;
-    private final UserMapperImpl userMapper;
-    private final AddressMapperImpl addressMapper;
+    private final UserCreationMapper userCreationMapper;
+    private final UserMapper userMapper;
+    private final AddressMapper addressMapper;
     private final UserValidator userValidator;
 
     @Autowired
-    public UserService(UserRepository userRepository, UserMapperImpl userMapper, UserCreationMapperImpl userCreationMapper, AddressMapperImpl addressMapper) {
+    public UserService(UserRepository userRepository, UserMapper userMapper, UserCreationMapper userCreationMapper, AddressMapper addressMapper) {
         this.userRepository = userRepository;
         this.userCreationMapper = userCreationMapper;
         this.userMapper = userMapper;

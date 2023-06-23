@@ -1,6 +1,5 @@
 package dd.projects.ddshop.dtos;
 
-import dd.projects.ddshop.entities.Variant;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -9,8 +8,7 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
-public class VariantDTO {
-
+public class VariantCreationDTO {
     private int id;
 
     private int availableQuantity;
@@ -19,6 +17,5 @@ public class VariantDTO {
 
     private ProductDTO productId;
 
-    private List<AssignedValueDTO> assignedValueDTOList;
-
+    private List<Integer> assignedValueDTOList;
 }

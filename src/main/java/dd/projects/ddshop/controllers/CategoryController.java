@@ -1,9 +1,6 @@
 package dd.projects.ddshop.controllers;
 
 import dd.projects.ddshop.dtos.CategoryDTO;
-import dd.projects.ddshop.entities.Address;
-import dd.projects.ddshop.entities.Category;
-import dd.projects.ddshop.entities.Product;
 import dd.projects.ddshop.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,7 +27,12 @@ public class CategoryController {
 
     @GetMapping("/getAllCategories")
     ResponseEntity<List<CategoryDTO>> read() {
-        return new ResponseEntity<>(categoryService.getCategory(), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(categoryService.getCategories(), HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/getCategory/{name}")
+    ResponseEntity<CategoryDTO> getCategory(@PathVariable String name) {
+        return new ResponseEntity<>(categoryService.getCategory(name), HttpStatus.ACCEPTED);
     }
 
     @PutMapping("/updateCategory/{id}")

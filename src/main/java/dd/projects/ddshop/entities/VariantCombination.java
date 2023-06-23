@@ -8,6 +8,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
+@Table(name="variant_combination")
 public class VariantCombination {
 
     @Id

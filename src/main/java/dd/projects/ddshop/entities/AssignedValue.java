@@ -12,13 +12,14 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name="assigned_value")
 public class AssignedValue {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "attribute_value_id")
     private AttributeValue attributeValueId;
 

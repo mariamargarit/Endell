@@ -12,6 +12,7 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name="cart_entry")
 public class CartEntry {
 
     @Id
@@ -32,11 +33,14 @@ public class CartEntry {
     @JoinColumn(name = "cart_id")
     private Cart cartId;
 
-    public CartEntry(int quantity, float pricePerPiece, float totalPricePerEntry, Variant variantId, Cart cartId) {
+    private String selectedSize;
+
+    public CartEntry(int quantity, float pricePerPiece, float totalPricePerEntry, Variant variantId, Cart cartId, String selectedSize) {
         this.quantity = quantity;
         this.pricePerPiece = pricePerPiece;
         this.totalPricePerEntry = totalPricePerEntry;
         this.variantId = variantId;
         this.cartId = cartId;
+        this.selectedSize = selectedSize;
     }
 }

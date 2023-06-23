@@ -1,7 +1,7 @@
 package dd.projects.ddshop.services;
 
 import dd.projects.ddshop.dtos.AssignedValueDTO;
-import dd.projects.ddshop.mappers.AssignedValueMapperImpl;
+import dd.projects.ddshop.mappers.AssignedValueMapper;
 import dd.projects.ddshop.repos.AssignedValueRepository;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +12,9 @@ import static java.util.stream.Collectors.toList;
 @Service
 public class AssignedValueService {
     private final AssignedValueRepository assignedValueRepository;
-    private final AssignedValueMapperImpl assignedValueMapper;
+    private final AssignedValueMapper assignedValueMapper;
 
-    public AssignedValueService(AssignedValueRepository assignedValueRepository, AssignedValueMapperImpl assignedValueMapper) {
+    public AssignedValueService(AssignedValueRepository assignedValueRepository, AssignedValueMapper assignedValueMapper) {
         this.assignedValueRepository = assignedValueRepository;
         this.assignedValueMapper = assignedValueMapper;
     }

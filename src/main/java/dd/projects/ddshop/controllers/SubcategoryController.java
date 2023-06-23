@@ -1,9 +1,6 @@
 package dd.projects.ddshop.controllers;
 
 import dd.projects.ddshop.dtos.SubcategoryDTO;
-import dd.projects.ddshop.entities.Category;
-import dd.projects.ddshop.entities.Subcategory;
-import dd.projects.ddshop.services.CategoryService;
 import dd.projects.ddshop.services.SubcategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,12 +14,10 @@ import java.util.List;
 public class SubcategoryController {
 
     private final SubcategoryService subcategoryService;
-    private final CategoryService categoryService;
 
     @Autowired
-    public SubcategoryController(SubcategoryService subcategoryService, CategoryService categoryService) {
+    public SubcategoryController(SubcategoryService subcategoryService) {
         this.subcategoryService = subcategoryService;
-        this.categoryService = categoryService;
     }
 
     @PostMapping("/createSubcategory/{id}")
@@ -33,7 +28,12 @@ public class SubcategoryController {
 
     @GetMapping("/getAllSubcategories")
     ResponseEntity<List<SubcategoryDTO>> read() {
-        return new ResponseEntity<>(subcategoryService.getSubcategory(), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(subcategoryService.getSubcategories(), HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/getSubcategory/{id}")
+    ResponseEntity<SubcategoryDTO> getSubcategory(@PathVariable Integer id) {
+        return new ResponseEntity<>(subcategoryService.getSubcategory(id), HttpStatus.ACCEPTED);
     }
 
     @PutMapping("/updateSubcategory/{id}")

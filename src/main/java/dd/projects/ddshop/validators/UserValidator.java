@@ -47,7 +47,7 @@ public class UserValidator {
         if (!userCreationDTO.getPassword().matches("(.*[0-9].*)")) {
             throw new InvalidInputException(messageSource.getMessage("api.error.password.number", null, Locale.ENGLISH));
         }
-        if (!userCreationDTO.getPassword().matches("(.*[@,#,$,%].*$)")) {
+        if (!userCreationDTO.getPassword().matches("(.*[$&+,:;=?@#|'<>.-^*()%!].*$)")) {
             throw new InvalidInputException(messageSource.getMessage("api.error.password.special", null, Locale.ENGLISH));
         }
     }

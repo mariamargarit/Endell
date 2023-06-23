@@ -1,7 +1,5 @@
 package dd.projects.ddshop.dtos;
 
-import dd.projects.ddshop.entities.User;
-import dd.projects.ddshop.mappers.AddressMapperImpl;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

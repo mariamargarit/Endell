@@ -1,6 +1,6 @@
 package dd.projects.ddshop.dtos;
 
-import dd.projects.ddshop.entities.Subcategory;
+import dd.projects.ddshop.entities.Brand;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -12,8 +12,12 @@ public class ProductDTO {
 
     private String name;
 
-    private String description;
-
     private SubcategoryDTO subcategoryId;
+
+    private BrandDTO brand;
+
+    private String image;
+
+    private float price;
 
 }

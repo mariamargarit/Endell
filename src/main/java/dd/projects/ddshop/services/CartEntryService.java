@@ -1,10 +1,12 @@
 package dd.projects.ddshop.services;
 
 import dd.projects.ddshop.dtos.CartEntryDTO;
-import dd.projects.ddshop.entities.*;
-import dd.projects.ddshop.mappers.CartEntryMapperImpl;
-import dd.projects.ddshop.mappers.CartMapperImpl;
-import dd.projects.ddshop.mappers.VariantMapperImpl;
+import dd.projects.ddshop.entities.Cart;
+import dd.projects.ddshop.entities.CartEntry;
+import dd.projects.ddshop.entities.Variant;
+import dd.projects.ddshop.mappers.CartEntryMapper;
+import dd.projects.ddshop.mappers.CartMapper;
+import dd.projects.ddshop.mappers.VariantMapper;
 import dd.projects.ddshop.repos.CartEntryRepository;
 import dd.projects.ddshop.repos.CartRepository;
 import dd.projects.ddshop.repos.UserRepository;
@@ -23,13 +25,13 @@ public class CartEntryService {
     private final CartRepository cartRepository;
     private final UserRepository userRepository;
     private final VariantRepository variantRepository;
-    private final CartEntryMapperImpl cartEntryMapper;
-    private final VariantMapperImpl variantMapper;
-    private final CartMapperImpl cartMapper;
+    private final CartEntryMapper cartEntryMapper;
+    private final VariantMapper variantMapper;
+    private final CartMapper cartMapper;
 
 
     @Autowired
-    public CartEntryService (CartEntryRepository cartEntryRepository, CartRepository cartRepository, UserRepository userRepository, VariantRepository variantRepository, CartEntryMapperImpl cartEntryMapper, VariantMapperImpl variantMapper, CartMapperImpl cartMapper){
+    public CartEntryService (CartEntryRepository cartEntryRepository, CartRepository cartRepository, UserRepository userRepository, VariantRepository variantRepository, CartEntryMapper cartEntryMapper, VariantMapper variantMapper, CartMapper cartMapper){
         this.cartEntryRepository = cartEntryRepository;
         this.cartRepository = cartRepository;
         this.userRepository = userRepository;
@@ -40,7 +42,7 @@ public class CartEntryService {
     }
 
     public CartEntryDTO createCartEntry (CartEntryDTO cartEntryDTO, int id) {
-        Cart cart = cartRepository.findCartByUserId(userRepository.getReferenceById(id));
+        Cart cart = cartRepository.findCartByUserIdAndValid(userRepository.getReferenceById(id), true);
         if(cart == null) {
             cart = new Cart(userRepository.getReferenceById(id));
             cartRepository.save(cart);
@@ -49,15 +51,15 @@ public class CartEntryService {
         CartEntry cartEntry = cartEntryRepository.findCartEntryByVariantIdAndCartId(variantMapper.toVariant(cartEntryDTO.getVariantId()), cart);
         if(cartEntry == null) {
             Variant variant = variantMapper.toVariant(cartEntryDTO.getVariantId());
-            CartEntry newCartEntry = new CartEntry(cartEntryDTO.getQuantity(), variant.getPrice(), variant.getPrice() * cartEntryDTO.getQuantity(), variant, cart);
+            CartEntry newCartEntry = new CartEntry(cartEntryDTO.getQuantity(), variant.getProductId().getPrice(), variant.getProductId().getPrice() * cartEntryDTO.getQuantity(), variant, cart, cartEntryDTO.getSelectedSize());
             cartEntryRepository.save(newCartEntry);
             cart.getCartEntry().add(newCartEntry);
-            cart.setTotalPrice(cart.getTotalPrice() + variant.getPrice());
+            cart.setTotalPrice(cart.getTotalPrice() + newCartEntry.getTotalPricePerEntry());
         }
         else {
-            cartEntry.setTotalPricePerEntry(cartEntry.getTotalPricePerEntry() + cartEntry.getPricePerPiece());
+            cartEntry.setTotalPricePerEntry(cartEntry.getTotalPricePerEntry() + cartEntry.getPricePerPiece() * cartEntryDTO.getQuantity());
             cartEntry.setQuantity(cartEntry.getQuantity() + cartEntryDTO.getQuantity());
-            cart.setTotalPrice(cart.getTotalPrice() + cartEntry.getPricePerPiece());
+            cart.setTotalPrice(cart.getTotalPrice() + cartEntry.getPricePerPiece() * cartEntryDTO.getQuantity());
             cartEntryRepository.save(cartEntry);
         }
         cartRepository.save(cart);

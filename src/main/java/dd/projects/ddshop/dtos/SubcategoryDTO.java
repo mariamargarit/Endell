@@ -11,4 +11,5 @@ import java.util.List;
 public class SubcategoryDTO {
     private int id;
     private String name;
+    private String category;
 }

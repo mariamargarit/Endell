@@ -2,7 +2,7 @@ package dd.projects.ddshop.services;
 
 import dd.projects.ddshop.dtos.CategoryDTO;
 import dd.projects.ddshop.entities.Category;
-import dd.projects.ddshop.mappers.CategoryMapperImpl;
+import dd.projects.ddshop.mappers.CategoryMapper;
 import dd.projects.ddshop.repos.CategoryRepository;
 import dd.projects.ddshop.validators.CategoryValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +15,12 @@ import static java.util.stream.Collectors.toList;
 @Service
 public class CategoryService {
     private final CategoryRepository categoryRepository;
-    private final CategoryMapperImpl categoryMapper;
+    private final CategoryMapper categoryMapper;
     private final CategoryValidator categoryValidator;
     private final SubcategoryService subcategoryService;
 
     @Autowired
-    public CategoryService(CategoryRepository categoryRepository, CategoryMapperImpl categoryMapper, SubcategoryService subcategoryService) {
+    public CategoryService(CategoryRepository categoryRepository, CategoryMapper categoryMapper, SubcategoryService subcategoryService) {
         this.categoryRepository = categoryRepository;
         this.categoryMapper = categoryMapper;
         this.categoryValidator = new CategoryValidator(categoryRepository);
@@ -31,8 +31,12 @@ public class CategoryService {
         categoryValidator.validateCategory(categoryDTO);
         return categoryRepository.save(categoryMapper.toCategory(categoryDTO));
     }
-    public Category readCategory(Integer id) { return categoryRepository.getReferenceById(id); }
-    public List<CategoryDTO> getCategory() {
+
+    public CategoryDTO getCategory(String name) {
+        return categoryMapper.toCategoryDTO(categoryRepository.findCategoryByName(name));
+    }
+
+    public List<CategoryDTO> getCategories() {
         return categoryRepository.findAll()
                 .stream()
                 .map(categoryMapper::toCategoryDTO)

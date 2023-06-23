@@ -31,15 +31,24 @@ public class CartController {
         cartService.createCart(cartDTO, id);
         return new ResponseEntity<>("", HttpStatus.CREATED);
     }
-
     @GetMapping("/getAllCarts")
     public ResponseEntity<CartDTO> read(@RequestParam(name="email") String email) {
         return new ResponseEntity<>(cartService.getCarts(email), HttpStatus.OK);
+    }
+    @GetMapping("/getCurrentCart")
+    public ResponseEntity<CartDTO> getCurrentCart(@RequestParam(name="email") String email) {
+        return new ResponseEntity<>(cartService.getCurrentCart(email), HttpStatus.OK);
     }
 
     @PutMapping("/updateCart/{id}")
     public ResponseEntity<Object> update (@PathVariable Integer id, @RequestBody CartDTO newCartDTO) {
         cartService.updateCart(id,newCartDTO);
+        return new ResponseEntity<>("",HttpStatus.OK);
+    }
+
+    @PutMapping("/updateCartQuantity/{id}")
+    public ResponseEntity<Object> updateCartQuantity (@PathVariable Integer id, @RequestBody Integer newQuantity) {
+        cartService.updateCartQuantity(id,newQuantity);
         return new ResponseEntity<>("",HttpStatus.OK);
     }
 

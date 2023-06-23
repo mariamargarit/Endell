@@ -12,6 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name="product_attribute")
 public class ProductAttribute {
 
     @Id
@@ -20,7 +21,7 @@ public class ProductAttribute {
 
     private String name;
 
-    @OneToMany(mappedBy = "productAttributeId")
+    @OneToMany(mappedBy = "productAttributeId", cascade = CascadeType.ALL)
     private List<AttributeValue> attributeValues;
 
     @ManyToMany(fetch = FetchType.LAZY,

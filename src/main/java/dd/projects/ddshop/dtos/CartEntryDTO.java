@@ -11,4 +11,5 @@ public class CartEntryDTO {
     private float pricePerPiece;
     private float totalPricePerEntry;
     private VariantDTO variantId;
+    private String selectedSize;
 }

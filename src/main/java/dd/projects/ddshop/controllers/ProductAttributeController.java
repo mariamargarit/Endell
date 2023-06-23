@@ -30,6 +30,18 @@ public class ProductAttributeController {
         return new ResponseEntity<>(productAttributeService.getProductAttribute(), HttpStatus.ACCEPTED);
     }
 
+    @PutMapping("/addSubcategoriesToProductAttribute/{id}")
+    public ResponseEntity<Object> addSubcategoriesToProductAttribute (@RequestBody Integer subcategoryId, @PathVariable Integer id) {
+        productAttributeService.addSubcategoriesToProductAttribute(subcategoryId,id);
+        return new ResponseEntity<>("", HttpStatus.OK);
+    }
+
+    @PutMapping("/addValuesToProductAttribute/{id}")
+    public ResponseEntity<Object> addValuesToProductAttribute (@RequestBody Integer attributeValueId, @PathVariable Integer id) {
+        productAttributeService.addValuesToProductAttribute(attributeValueId,id);
+        return new ResponseEntity<>("", HttpStatus.OK);
+    }
+
     @PutMapping("/updateProductAttribute/{id}")
     public ResponseEntity<Object> update (@PathVariable Integer id, @RequestBody ProductAttributeDTO newProductAttributeDTO) {
         productAttributeService.updateProductAttribute(id,newProductAttributeDTO);

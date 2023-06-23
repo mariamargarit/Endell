@@ -6,10 +6,11 @@ import lombok.Data;
 @AllArgsConstructor
 @Data
 public class AddressDTO {
+    private int id;
 
     private String streetLine;
 
-    private int postalCode;
+    private String postalCode;
 
     private String city;
 

@@ -1,8 +1,10 @@
 package dd.projects.ddshop.entities;
 
 import com.sun.istack.NotNull;
+import dd.projects.ddshop.dtos.UserOrderDTO;
 import dd.projects.ddshop.enumerated.PaymentType;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -10,14 +12,15 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
+@Table(name="user_order")
 public class UserOrder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Enumerated(EnumType.STRING)
-    private PaymentType paymentType;
+    private String paymentType;
 
     @OneToOne
     @JoinColumn(name = "delivery_address")
@@ -34,5 +37,12 @@ public class UserOrder {
     @OneToOne
     @JoinColumn(name = "cart_id")
     private Cart cartId;
-
+    public UserOrder(UserOrderDTO orderDTO, Address address, User user, Cart cart) {
+        this.id = orderDTO.getId();
+        this.paymentType = orderDTO.getPaymentType();
+        this.deliveryAddress = address;
+        this.invoiceAddress = address;
+        this.userId = user;
+        this.cartId = cart;
+    }
 }

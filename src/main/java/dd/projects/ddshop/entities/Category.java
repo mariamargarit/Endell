@@ -9,6 +9,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@Table(name="category")
 public class Category {
 
     @Id
@@ -17,7 +18,7 @@ public class Category {
 
     private String name;
 
-    @OneToMany(mappedBy = "categoryId")
+    @OneToMany(mappedBy = "categoryId", cascade = CascadeType.ALL)
     private List<Subcategory> subcategories;
 
 }

@@ -13,6 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name="product")
 public class Product {
 
     @Id
@@ -21,19 +22,27 @@ public class Product {
 
     private String name;
 
-    private String description;
-
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "subcategory_id")
     private Subcategory subcategoryId;
 
-    @OneToMany(mappedBy = "productId")
+    @ManyToOne
+    @JoinColumn(name = "brand_id")
+    private Brand brand;
+
+    private String image;
+
+    private float price;
+
+    @OneToMany(mappedBy = "productId", cascade = CascadeType.ALL)
     private List<Variant> variants;
 
     public Product(Product toProduct, Subcategory subcategory) {
         this.id = toProduct.getId();
         this.name = toProduct.getName();
-        this.description = toProduct.getDescription();
+        this.brand = toProduct.getBrand();
+        this.image = toProduct.getImage();
+        this.price = toProduct.getPrice();
         this.subcategoryId = subcategory;
     }
 }

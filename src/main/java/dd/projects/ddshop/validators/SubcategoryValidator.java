@@ -22,12 +22,12 @@ public class SubcategoryValidator {
         this.subcategoryRepository = subcategoryRepository;
         this.messageSource = new AppConfiguration().messageSource();
     }
-    public void validateSubcategory(String name) {
+    public void validateSubcategory(String name, Integer id) {
         if(name.isEmpty()){
             throw new InvalidInputException(messageSource.getMessage("api.error.empty.fields", null, Locale.ENGLISH));
         }
         for(final Subcategory subcategory : subcategoryRepository.findAll()){
-            if(subcategory.getName().equals(name))
+            if(subcategory.getName().equals(name) && subcategory.getCategoryId().getId() == id)
                 throw new AlreadyExistsException(messageSource.getMessage("api.error.subcategory.already.exists", null, Locale.ENGLISH));
         }
     }

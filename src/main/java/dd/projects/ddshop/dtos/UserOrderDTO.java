@@ -6,10 +6,10 @@ import lombok.Data;
 @AllArgsConstructor
 @Data
 public class UserOrderDTO {
+    private int id;
     private String paymentType;
     private AddressDTO deliveryAddress;
     private AddressDTO invoiceAddress;
-    private UserDTO userId;
-    private CartDTO cartId;
-    private Boolean valid;
+    private Integer userId;
+    private Integer cartId;
 }

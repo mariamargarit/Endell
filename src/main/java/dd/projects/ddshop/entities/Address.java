@@ -8,6 +8,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
+@Table(name="address")
 public class Address {
 
     @Id
@@ -16,7 +17,7 @@ public class Address {
 
     private String streetLine;
 
-    private int postalCode;
+    private String postalCode;
 
     private String city;
 

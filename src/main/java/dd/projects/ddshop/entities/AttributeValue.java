@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name="attribute_value")
 public class AttributeValue {
 
     @Id
@@ -18,17 +19,19 @@ public class AttributeValue {
 
     private String val;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "product_attribute_id")
     private ProductAttribute productAttributeId;
+
+    @OneToOne(mappedBy = "attributeValueId", cascade = CascadeType.ALL)
+    private AssignedValue assignedValue;
 
     public AttributeValue(String attribute, ProductAttribute productAttribute) {
         this.val = attribute;
         this.productAttributeId = productAttribute;
     }
-    public AttributeValue(AttributeValue attributeValue, ProductAttribute productAttribute) {
+    public AttributeValue(AttributeValue attributeValue) {
         this.val = attributeValue.getVal();
-        this.productAttributeId = productAttribute;
     }
 
 }
