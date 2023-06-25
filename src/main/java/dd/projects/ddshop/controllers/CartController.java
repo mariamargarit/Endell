@@ -35,6 +35,10 @@ public class CartController {
     public ResponseEntity<CartDTO> read(@RequestParam(name="email") String email) {
         return new ResponseEntity<>(cartService.getCarts(email), HttpStatus.OK);
     }
+    @GetMapping("/getAllCartsForUser/{id}")
+    public ResponseEntity<List<CartDTO>> getAllCartsForUser(@PathVariable Integer id) {
+        return new ResponseEntity<>(cartService.getAllCartsForUser(id), HttpStatus.OK);
+    }
     @GetMapping("/getCurrentCart")
     public ResponseEntity<CartDTO> getCurrentCart(@RequestParam(name="email") String email) {
         return new ResponseEntity<>(cartService.getCurrentCart(email), HttpStatus.OK);

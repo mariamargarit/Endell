@@ -2,10 +2,15 @@ package dd.projects.ddshop.services;
 
 import dd.projects.ddshop.dtos.VariantCreationDTO;
 import dd.projects.ddshop.dtos.VariantDTO;
-import dd.projects.ddshop.entities.*;
-import dd.projects.ddshop.mappers.ProductMapper;
+import dd.projects.ddshop.entities.AssignedValue;
+import dd.projects.ddshop.entities.Brand;
+import dd.projects.ddshop.entities.Product;
+import dd.projects.ddshop.entities.Variant;
 import dd.projects.ddshop.mappers.VariantMapper;
-import dd.projects.ddshop.repos.*;
+import dd.projects.ddshop.repos.AssignedValueRepository;
+import dd.projects.ddshop.repos.BrandRepository;
+import dd.projects.ddshop.repos.ProductRepository;
+import dd.projects.ddshop.repos.VariantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,20 +24,14 @@ public class VariantService {
     private final VariantRepository variantRepository;
     private final VariantMapper variantMapper;
     private final ProductRepository productRepository;
-    private final ProductMapper productMapper;
     private final AssignedValueRepository assignedValueRepository;
-    private final VariantCombinationRepository variantCombinationRepository;
-    private final SubcategoryRepository subcategoryRepository;
     private final BrandRepository brandRepository;
     @Autowired
-    public VariantService (VariantRepository variantRepository, VariantMapper variantMapper, ProductRepository productRepository, ProductMapper productMapper, AssignedValueRepository assignedValueRepository, VariantCombinationRepository variantCombinationRepository, SubcategoryRepository subcategoryRepository, BrandRepository brandRepository){
+    public VariantService (VariantRepository variantRepository, VariantMapper variantMapper, ProductRepository productRepository, AssignedValueRepository assignedValueRepository, BrandRepository brandRepository){
         this.variantRepository = variantRepository;
         this.variantMapper = variantMapper;
         this.productRepository = productRepository;
-        this.productMapper = productMapper;
         this.assignedValueRepository = assignedValueRepository;
-        this.variantCombinationRepository = variantCombinationRepository;
-        this.subcategoryRepository = subcategoryRepository;
         this.brandRepository = brandRepository;
     }
 

@@ -12,6 +12,8 @@ import dd.projects.ddshop.repos.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CartService {
 
@@ -42,6 +44,9 @@ public class CartService {
 
     public CartDTO getCarts(String email) {
         return cartMapper.toCartDTO(cartRepository.findCartByUserId(userRepository.findByEmail(email)));
+    }
+    public List<CartDTO> getAllCartsForUser(Integer id) {
+        return cartMapper.toCartDTOList(cartRepository.findCartsByUserIdAndValid(userRepository.getReferenceById(id), false));
     }
 
     public CartDTO getCurrentCart(String email) {

@@ -1,11 +1,7 @@
 package dd.projects.ddshop.controllers;
 
-import dd.projects.ddshop.dtos.ProductDTO;
 import dd.projects.ddshop.dtos.VariantCreationDTO;
 import dd.projects.ddshop.dtos.VariantDTO;
-import dd.projects.ddshop.entities.Product;
-import dd.projects.ddshop.entities.Variant;
-import dd.projects.ddshop.services.ProductService;
 import dd.projects.ddshop.services.VariantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,18 +9,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @CrossOrigin("http://localhost:4200")
 public class VariantController {
     private final VariantService variantService;
-    private final ProductService productService;
 
     @Autowired
-    public VariantController(VariantService variantService, ProductService productService) {
+    public VariantController(VariantService variantService) {
         this.variantService = variantService;
-        this.productService = productService;
     }
     @PostMapping("/createVariant/{id}")
     public ResponseEntity<Object> create(@RequestBody VariantCreationDTO variantDto, @PathVariable Integer id) {

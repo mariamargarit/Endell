@@ -43,7 +43,6 @@ public class UserOrderService {
         cartRepository.save(cart);
         addressRepository.save(address);
         userOrderRepository.save(order);
-
     }
     public List<UserOrder> getOrders() { return userOrderRepository.findAll(); }
     public void updateOrder(int id, UserOrder newOrder) {
